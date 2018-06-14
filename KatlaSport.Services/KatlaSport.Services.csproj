@@ -68,7 +68,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" Exclude="obj\Debug\*.cs;obj\Release\*.cs" />
+    <Compile Include="CatalogueManagement\CatalogueManagementService.cs" />
+    <Compile Include="CatalogueManagement\Category.cs" />
+    <Compile Include="CatalogueManagement\ICatalogueManagementService.cs" />
+    <Compile Include="CustomerManagement\CustomerBriefInfo.cs" />
+    <Compile Include="CustomerManagement\CustomerFullInfo.cs" />
+    <Compile Include="CustomerManagement\CustomerManagementService.cs" />
+    <Compile Include="CustomerManagement\ICustomerManagementService.cs" />
+    <Compile Include="DependencyRegistrationModule.cs" />
+    <Compile Include="HiveAnalytics\HiveAnalysisService.cs" />
+    <Compile Include="HiveAnalytics\IHiveAnalysisService.cs" />
+    <Compile Include="HiveManagement\HiveManagementMappingProfile.cs" />
+    <Compile Include="HiveManagement\HiveSectionService.cs" />
+    <Compile Include="HiveManagement\HiveService.cs" />
+    <Compile Include="IUserContext.cs" />
+    <Compile Include="ProductManagement\ProductCatalogueService.cs" />
+    <Compile Include="ProductManagement\ProductCategoryService.cs" />
+    <Compile Include="ProductManagement\ProductManagementMappingProfile.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestedResourceHasConflictException.cs" />
+    <Compile Include="RequestedResourceNotFoundException.cs" />
+    <Compile Include="UserContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
