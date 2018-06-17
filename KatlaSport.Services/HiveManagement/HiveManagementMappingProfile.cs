@@ -8,10 +8,11 @@ namespace KatlaSport.Services.HiveManagement
     {
         public HiveManagementMappingProfile()
         {
-            CreateMap<DataAccessHive, HiveListItem>();
-            CreateMap<DataAccessHive, Hive>();
-            CreateMap<DataAccessHiveSection, HiveSectionListItem>();
-            CreateMap<DataAccessHiveSection, HiveSection>();
+            CreateMap<DataAccessHive, HiveListItem>().ReverseMap();
+            CreateMap<DataAccessHive, Hive>().ReverseMap();
+            CreateMap<DataAccessHiveSection, HiveSectionListItem>().ReverseMap();
+            CreateMap<DataAccessHiveSection, HiveSection>().ReverseMap();
+            CreateMap<UpdateHiveRequest, DataAccessHive>().ReverseMap();
         }
     }
 }

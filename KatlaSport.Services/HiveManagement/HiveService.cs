@@ -38,7 +38,7 @@ namespace KatlaSport.Services.HiveManagement
 
             foreach (HiveListItem hive in hives)
             {
-                hive.HiveSectionCount = _context.Sections.Count(s => s.StoreHiveId == hive.Id);
+                hive.HiveSectionCount = _context.Sections.Where(s => s.StoreHiveId == hive.Id).Count();
             }
 
             return hives;
@@ -85,6 +85,7 @@ namespace KatlaSport.Services.HiveManagement
             }
 
             dbHives = await _context.Hives.Where(p => p.Id == hiveId).ToArrayAsync();
+
             if (dbHives.Length == 0)
             {
                 throw new RequestedResourceNotFoundException();
