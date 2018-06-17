@@ -6,8 +6,15 @@ using Xunit;
 
 namespace KatlaSport.Services.Tests.CatalogueManagement
 {
+    using AutoMapper;
+
     public class CatalogueManagementServiceTests
     {
+        public CatalogueManagementServiceTests()
+        {
+            Mapper.Reset();
+        }
+
         [Fact]
         public void CreateCatalogueManagementServiceWithNullAsParameterTest()
         {

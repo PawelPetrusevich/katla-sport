@@ -39,6 +39,7 @@ export class HiveService {
   }
 
   setHiveStatus(hiveId: number, deletedStatus: boolean): Observable<Object> {
-    return null;
+    var body = {hiveId,deletedStatus};
+    return this.http.put<Object>(`${this.url}/${hiveId}/status/${deletedStatus}`,body);
   }
 }
