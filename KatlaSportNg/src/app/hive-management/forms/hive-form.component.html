@@ -1,6 +1,6 @@
 <div class="container">
   <h2>Hive Editor</h2>
-  <form (ngSubmit)="onSubmit()" #hiveForm="ngForm">
+  <form (ngSubmit)="onSubmit()" name="hiveForm" #hiveForm="ngForm">
     <div class="form-group" *ngIf='existed'>
       <label for="idLabel">ID</label>
       <input type="text" class="form-control" id="id" aria-describedby="idLabel" [(ngModel)]="hive.id" name="id" #id="ngModel"
@@ -15,10 +15,33 @@
         <div *ngIf="name.errors.minlength">Hive Name must be at least 4 characters long.</div>
       </div>
     </div>
+    <div class="form-group">
+      <label for="code" id="codeLabel">Hive Code</label>
+      <input type="text" class="form-control" id="code" aria-describedby="codeLabel" minlength="5" maxlength="5" required [(ngModel)]="hive.code" name="code" #code="ngModel">
+      <div *ngIf="code.invalid && (code.dirty || code.touched)" class="alert alert-danger">
+        <div *ngIf="code.errors.required">Hive Code is required.</div>
+        <div *ngIf="code.errors.minlength">Hive Code must be 5 characters long.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="address" id="addressLabel">Hive Address</label>
+      <input type="text" class="form-control" id="address" aria-describedby="addressLabel" maxlength="300" required [(ngModel)]="hive.address" name="address" #address="ngModel">
+      <div *ngIf="address.invalid && (address.dirty || address.touched)" class="alert alert-danger">
+        <div *ngIf="address.errors.required">Hive Code is required.</div>
+        <div *ngIf="address.errors.minlength">Hive Code must be less at 300 characters long.</div>
+      </div>
+    </div>
     <div class="form-group" *ngIf='existed'>
       <label for="lastUpdated" id="lastUpdatedLabel">Last Update</label>
       <input type="text" class="form-control" id="lastUpdated" aria-describedby="lastUpdatedLabel" required [(ngModel)]="hive.lastUpdated"
         name="lastUpdated" #lastUpdated="ngModel" readonly>
     </div>
   </form>
+  <div class="btn-group">
+    <button class="btn btn-primary" routerLink="/hives">Back</button>
+    <button class="btn btn-primary" *ngIf="hiveForm.valid" (click)="onSubmit()">Save</button>
+    <button class="btn btn-danger" *ngIf="!hive.isDeleted && existed" (click)="onDelete()">Delete</button>
+    <button class="btn btn-success" *ngIf="hive.isDeleted && existed" (click)="onUndelete()">UnDelete</button>
+    <button class="btn btn-primary" *ngIf="!existed" (click)="onPurge()">Purge</button>
+  </div>
 </div>

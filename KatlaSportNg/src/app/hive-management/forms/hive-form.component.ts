@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HiveService } from '../services/hive.service';
 import { Hive } from '../models/hive';
+import { UpdateRequestHive } from "../models/update-request-hive";
 
 @Component({
   selector: 'app-hive-form',
@@ -12,6 +13,7 @@ export class HiveFormComponent implements OnInit {
 
   hive = new Hive(0, "", "", "", false, "");
   existed = false;
+  updateRequestHive = new UpdateRequestHive("","","");
 
   constructor(
     private route: ActivatedRoute,
@@ -34,16 +36,28 @@ export class HiveFormComponent implements OnInit {
   onCancel() {
     this.navigateToHives();
   }
-  
+
   onSubmit() {
+    if(this.hive.id == 0){
+      this.hiveService.addHive(this.hive).subscribe(x=>this.navigateToHives());
+    }
+    else{
+      this.updateRequestHive.address = this.hive.address;
+      this.updateRequestHive.code = this.hive.code;
+      this.updateRequestHive.name = this.hive.name;
+      this.hiveService.updateHive(this.updateRequestHive,this.hive.id).subscribe(x=>this.navigateToHives());
+    }
   }
 
   onDelete() {
+    this.hiveService.setHiveStatus(this.hive.id,true).subscribe(x=>this.hive.isDeleted = true);
   }
 
   onUndelete() {
+    this.hiveService.setHiveStatus(this.hive.id,false).subscribe(x=>this.hive.isDeleted = false);
   }
 
   onPurge() {
+    this.hive = new Hive(0, "", "", "", false, "");
   }
 }

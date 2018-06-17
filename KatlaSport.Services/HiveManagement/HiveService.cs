@@ -60,14 +60,18 @@ namespace KatlaSport.Services.HiveManagement
         public async Task<Hive> CreateHive(UpdateHiveRequest createRequest)
         {
             var dbHives = await _context.Hives.Where(h => h.Code == createRequest.Code).ToArrayAsync();
+
             if (dbHives.Length > 0)
             {
                 throw new RequestedResourceHasConflictException("code");
             }
 
             var dbHive = Mapper.Map<UpdateHiveRequest, DbHive>(createRequest);
+
             dbHive.CreatedBy = _userContext.UserId;
+
             dbHive.LastUpdatedBy = _userContext.UserId;
+
             _context.Hives.Add(dbHive);
 
             await _context.SaveChangesAsync();
