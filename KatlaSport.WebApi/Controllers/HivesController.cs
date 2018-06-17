@@ -101,7 +101,7 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.Conflict)]
         [SwaggerResponse(HttpStatusCode.NotFound)]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> UpdateHive([FromUri] int hiveId, [FromBody] UpdateHiveRequest hive)
+        public async Task<IHttpActionResult> UpdateHive([FromUri] int id, [FromBody] UpdateHiveRequest hive)
         {
             if (hive == null)
             {
@@ -113,7 +113,7 @@ namespace KatlaSport.WebApi.Controllers
                 return this.BadRequest(Resources.ModelIsInvalid);
             }
 
-            var result = await this._hiveService.UpdateHive(hiveId, hive);
+            var result = await this._hiveService.UpdateHive(id, hive);
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
         }

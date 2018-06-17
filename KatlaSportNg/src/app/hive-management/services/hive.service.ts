@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Hive } from '../models/hive';
 import { HiveListItem } from '../models/hive-list-item';
 import { HiveSectionListItem } from '../models/hive-section-list-item';
+import { UpdateRequestHive } from '../models/update-request-hive';
 
 @Injectable({
   providedIn: 'root'
@@ -27,15 +28,15 @@ export class HiveService {
   }
 
   addHive(hive: Hive): Observable<Hive> {
-    return null;
+    return this.http.post<Hive>(`${this.url}addHive`,hive);
   }
 
-  updateHive(hive: Hive): Observable<Object> {
-    return null;
+  updateHive(updateRequestHive: UpdateRequestHive,hiveId: number): Observable<Object> {
+    return this.http.put(`${this.url}/update/${hiveId}`,updateRequestHive);
   }
 
   deleteHive(hiveId: number): Observable<Object> {
-    return null;
+    return this.http.delete(`${this.url}${hiveId}`);
   }
 
   setHiveStatus(hiveId: number, deletedStatus: boolean): Observable<Object> {
