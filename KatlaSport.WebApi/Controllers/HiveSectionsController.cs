@@ -60,7 +60,7 @@ namespace KatlaSport.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("addHiveSection")]
+        [Route("addHiveSection/{hiveId:int:min(1)}")]
         [SwaggerResponse(HttpStatusCode.Created, Description = "Return created hive section", Type = typeof(HiveSection))]
         [SwaggerResponse(HttpStatusCode.BadRequest)]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
