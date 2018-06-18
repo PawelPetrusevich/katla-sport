@@ -6,15 +6,8 @@ using Xunit;
 
 namespace KatlaSport.Services.Tests.CustomerManagement
 {
-    using AutoMapper;
-
     public class CustomerManagementServiceTests
     {
-        public CustomerManagementServiceTests()
-        {
-            Mapper.Reset();
-        }
-
         [Fact]
         public void Ctor_ContextIsNull_ExceptionThrown()
         {

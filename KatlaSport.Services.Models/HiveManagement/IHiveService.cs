@@ -25,16 +25,16 @@ namespace KatlaSport.Services.HiveManagement
         /// <summary>
         /// Creates a new hive.
         /// </summary>
-        /// <param name="createRequest">A <see cref="Task{UpdateHiveRequest}"/>.</param>
-        /// <returns>A <see cref="Hive"/>.</returns>
+        /// <param name="createRequest">A <see cref="UpdateHiveRequest"/>.</param>
+        /// <returns>A <see cref="Task{Hive}"/>.</returns>
         Task<Hive> CreateHive(UpdateHiveRequest createRequest);
 
         /// <summary>
         /// Updates an existed hive.
         /// </summary>
         /// <param name="hiveId">A hive identifier.</param>
-        /// <param name="updateRequest">A <see cref="Task{UpdateHiveRequest}"/>.</param>
-        /// <returns>A <see cref="Hive"/>.</returns>
+        /// <param name="updateRequest">A <see cref="UpdateHiveRequest"/>.</param>
+        /// <returns>A <see cref="Task{Hive}"/>.</returns>
         Task<Hive> UpdateHive(int hiveId, UpdateHiveRequest updateRequest);
 
         /// <summary>
