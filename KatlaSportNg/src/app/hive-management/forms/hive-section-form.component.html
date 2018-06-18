@@ -1,3 +1,39 @@
-<p>
-  hive-section-form works!
-</p>
+<div class="container">
+  <h2>Hive Section Editor</h2>
+  <form (ngSubmit)="onSubmit()" name="hiveSectionForm" #hiveSectionForm="ngForm">
+    <div class="form-group" *ngIf='existed'>
+      <label for="idLabel">ID</label>
+      <input type="text" class="form-control" id="id" aria-describedby="idLabel" [(ngModel)]="hiveSection.id" name="id" #id="ngModel"
+        readonly>
+    </div>
+    <div class="form-group">
+      <label for="name" id="nameLabel">Hive Section Name</label>
+      <input type="text" class="form-control" id="name" aria-describedby="nameLabel" minlength="4" maxlength="60" required [(ngModel)]="hiveSection.name"
+        name="name" #name="ngModel">
+      <div *ngIf="name.invalid && (name.dirty || name.touched)" class="alert alert-danger">
+        <div *ngIf="name.errors.required">Hive Section Name is required.</div>
+        <div *ngIf="name.errors.minlength">Hive Section Name must be at least 4 characters long.</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="code" id="codeLabel">Hive Section Code</label>
+      <input type="text" class="form-control" id="code" aria-describedby="codeLabel" minlength="5" maxlength="5" required [(ngModel)]="hiveSection.code" name="code" #code="ngModel">
+      <div *ngIf="code.invalid && (code.dirty || code.touched)" class="alert alert-danger">
+        <div *ngIf="code.errors.required">Hive Section Code is required.</div>
+        <div *ngIf="code.errors.minlength">Hive Section Code must be 5 characters long.</div>
+      </div>
+    </div>
+    <div class="form-group" *ngIf='existed'>
+      <label for="lastUpdated" id="lastUpdatedLabel">Last Update</label>
+      <input type="text" class="form-control" id="lastUpdated" aria-describedby="lastUpdatedLabel" required [(ngModel)]="hiveSection.lastUpdated"
+        name="lastUpdated" #lastUpdated="ngModel" readonly>
+    </div>
+  </form>
+  <div class="btn-group">
+    <button class="btn btn-primary" routerLink="/hive/{{hiveId}}/sections">Back</button>
+    <button class="btn btn-primary" *ngIf="hiveSectionForm.valid" (click)="onSubmit()">Save</button>
+    <button class="btn btn-danger" *ngIf="!hiveSection.isDeleted && existed" (click)="onDelete()">Delete</button>
+    <button class="btn btn-success" *ngIf="hiveSection.isDeleted && existed" (click)="onUnDelete()">UnDelete</button>
+    <button class="btn btn-primary" *ngIf="!existed" (click)="onPurge()">Purge</button>
+  </div>
+</div>
