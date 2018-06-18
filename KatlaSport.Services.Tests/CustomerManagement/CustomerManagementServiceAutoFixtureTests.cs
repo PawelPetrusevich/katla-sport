@@ -10,15 +10,8 @@ using Xunit;
 
 namespace KatlaSport.Services.Tests.CustomerManagement
 {
-    using AutoMapper;
-
     public class CustomerManagementServiceAutoFixtureTests
     {
-        public CustomerManagementServiceAutoFixtureTests()
-        {
-            Mapper.Reset();
-        }
-
         [Theory]
         [AutoMoqData]
         public void GetAmount_EmptySet_ZeroReturned([Frozen] Mock<ICustomerContext> context, CustomerManagementService service)
