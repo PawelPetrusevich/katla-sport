@@ -8,8 +8,6 @@
     using AutoFixture;
     using AutoFixture.Xunit2;
 
-    using AutoMapper;
-
     using FluentAssertions;
 
     using KatlaSport.DataAccess.ProductStoreHive;
@@ -23,8 +21,7 @@
     {
         public HiveManagementServiceTests()
         {
-            Mapper.Reset();
-            Mapper.Initialize(x => x.AddProfile(new HiveManagementMappingProfile()));
+            var x = MapperInitialize.Initialize();
         }
 
         [Theory]

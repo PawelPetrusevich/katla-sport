@@ -104,6 +104,7 @@
     <Compile Include="FakeEntitySet.cs" />
     <Compile Include="HiveManagement\HiveManagementServiceTests.cs" />
     <Compile Include="HiveManagement\HiveSectionsManagementServiceTests.cs" />
+    <Compile Include="MapperInitialize.cs" />
     <Compile Include="MockExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
