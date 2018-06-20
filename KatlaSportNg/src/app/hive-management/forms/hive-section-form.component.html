@@ -34,6 +34,6 @@
     <button class="btn btn-primary" *ngIf="hiveSectionForm.valid" (click)="onSubmit()">Save</button>
     <button class="btn btn-danger" *ngIf="!hiveSection.isDeleted && existed" (click)="onDelete()">Delete</button>
     <button class="btn btn-success" *ngIf="hiveSection.isDeleted && existed" (click)="onUnDelete()">UnDelete</button>
-    <button class="btn btn-primary" *ngIf="!existed" (click)="onPurge()">Purge</button>
+    <button class="btn btn-primary" *ngIf="hiveSection.isDeleted && existed" (click)="onPurge()">Purge</button>
   </div>
 </div>

@@ -44,7 +44,7 @@ export class HiveSectionFormComponent implements OnInit {
   }
 
   onPurge(){
-    this.hiveSection = new HiveSection(0,"","",false,"");
+    this.service.deleteHiveSection(this.hiveSection.id).subscribe(x=>this.navigateToHiveSection());
   }
 
   onSubmit() {

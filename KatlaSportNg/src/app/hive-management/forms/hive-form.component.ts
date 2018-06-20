@@ -58,6 +58,6 @@ export class HiveFormComponent implements OnInit {
   }
 
   onPurge() {
-    this.hive = new Hive(0, "", "", "", false, "");
+    this.hiveService.deleteHive(this.hive.id).subscribe(x=>this.navigateToHives());
   }
 }
