@@ -113,6 +113,7 @@
     <Compile Include="MapperInitialize.cs" />
     <Compile Include="MockExtensions.cs" />
     <Compile Include="ProductManagement\ProductCatalogueServiceTests.cs" />
+    <Compile Include="ProductManagement\ProductCategoryServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestDbAsyncQueryProvider.cs" />
   </ItemGroup>
