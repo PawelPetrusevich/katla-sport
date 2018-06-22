@@ -35,7 +35,7 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> GetHives()
         {
-            var hives = await _hiveService.GetHives();
+            var hives = await _hiveService.GetHivesAsync();
             return Ok(hives);
         }
 
@@ -46,7 +46,7 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> GetHive(int hiveId)
         {
-            var hive = await _hiveService.GetHive(hiveId);
+            var hive = await _hiveService.GetHiveAsync(hiveId);
             return Ok(hive);
         }
 
@@ -68,7 +68,7 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> SetStatus([FromUri] int hiveId, [FromUri] bool deletedStatus)
         {
-            await _hiveService.SetStatus(hiveId, deletedStatus);
+            await _hiveService.SetStatusAsync(hiveId, deletedStatus);
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
         }
 
@@ -89,7 +89,7 @@ namespace KatlaSport.WebApi.Controllers
                 return this.BadRequest(Resources.ModelIsInvalid);
             }
 
-            var result = await this._hiveService.CreateHive(hive);
+            var result = await this._hiveService.CreateHiveAsync(hive);
             var location = $"api/hives/{result.Id}";
             return this.Created<Hive>(location, result);
         }
@@ -113,7 +113,7 @@ namespace KatlaSport.WebApi.Controllers
                 return this.BadRequest(Resources.ModelIsInvalid);
             }
 
-            var result = await this._hiveService.UpdateHive(id, hive);
+            var result = await this._hiveService.UpdateHiveAsync(id, hive);
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
         }
@@ -127,7 +127,7 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> DeleteHive([FromUri] int id)
         {
-            await this._hiveService.DeleteHive(id);
+            await this._hiveService.DeleteHiveAsync(id);
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
         }

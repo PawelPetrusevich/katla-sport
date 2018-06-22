@@ -40,6 +40,7 @@ namespace KatlaSport.Services.HiveManagement
         public async Task<HiveSection> GetHiveSectionAsync(int hiveSectionId)
         {
             var dbHiveSections = await _context.Sections.Where(s => s.Id == hiveSectionId).ToArrayAsync();
+
             if (dbHiveSections.Length == 0)
             {
                 throw new RequestedResourceNotFoundException();
@@ -78,7 +79,7 @@ namespace KatlaSport.Services.HiveManagement
         }
 
         /// <inheritdoc/>
-        public async Task<HiveSection> CreateHiveSection(UpdateHiveSectionRequest hiveSection, int hiveId)
+        public async Task<HiveSection> CreateHiveSectionAsync(UpdateHiveSectionRequest hiveSection, int hiveId)
         {
             var dbHiveSections = await _context.Sections.Where(x => x.Code == hiveSection.Code).ToArrayAsync();
             if (dbHiveSections.Length > 0)
@@ -105,7 +106,7 @@ namespace KatlaSport.Services.HiveManagement
         }
 
         /// <inheritdoc/>
-        public async Task<HiveSection> UpdateHiveSection(int hiveSectionId, UpdateHiveSectionRequest hiveSection)
+        public async Task<HiveSection> UpdateHiveSectionAsync(int hiveSectionId, UpdateHiveSectionRequest hiveSection)
         {
             var dbHivesSections = await _context.Sections.Where(p => p.Code == hiveSection.Code && p.Id != hiveSectionId).ToArrayAsync();
             if (dbHivesSections.Length > 0)
@@ -131,9 +132,10 @@ namespace KatlaSport.Services.HiveManagement
         }
 
         /// <inheritdoc/>
-        public async Task DeleteHiveSection(int hiveSecionId)
+        public async Task DeleteHiveSectionAsync(int hiveSecionId)
         {
             var dbHivesSections = await _context.Sections.Where(p => p.Id == hiveSecionId).ToArrayAsync();
+
             if (dbHivesSections.Length == 0)
             {
                 throw new RequestedResourceNotFoundException();

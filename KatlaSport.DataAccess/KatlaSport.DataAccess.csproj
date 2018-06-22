@@ -60,7 +60,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="**\*.cs" Exclude="obj\Debug\*.cs;obj\Release\*.cs;Migrations\*.*" />
+    <Compile Include="ApplicationDbContext.cs" />
+    <Compile Include="CustomerCatalogue\Customer.cs" />
+    <Compile Include="CustomerCatalogue\CustomerConfiguration.cs" />
+    <Compile Include="CustomerCatalogue\CustomerContext.cs" />
+    <Compile Include="CustomerCatalogue\ICustomerContext.cs" />
+    <Compile Include="CustomSqlServerMigrationSqlGenerator.cs" />
+    <Compile Include="DebugDatabaseLogger.cs" />
+    <Compile Include="DependencyRegistrationModule.cs" />
+    <Compile Include="DomainContextBase.cs" />
+    <Compile Include="EntitySet.cs" />
+    <Compile Include="EntitySetBase.cs" />
+    <Compile Include="IAsyncEntityStorage.cs" />
+    <Compile Include="IDatabaseLogger.cs" />
+    <Compile Include="IEntitySet.cs" />
+    <Compile Include="ProductCatalogue\CatalogueProduct.cs" />
+    <Compile Include="ProductCatalogue\CatalogueProductConfiguration.cs" />
+    <Compile Include="ProductCatalogue\IProductCatalogueContext.cs" />
+    <Compile Include="ProductCatalogue\ProductCatalogueContext.cs" />
+    <Compile Include="ProductCatalogue\ProductCategory.cs" />
+    <Compile Include="ProductCatalogue\ProductCategoryConfiguration.cs" />
+    <Compile Include="ProductStoreHive\IProductStoreHiveContext.cs" />
+    <Compile Include="ProductStoreHive\ProductStoreHiveContext.cs" />
+    <Compile Include="ProductStoreHive\StoreHive.cs" />
+    <Compile Include="ProductStoreHive\StoreHiveConfiguration.cs" />
+    <Compile Include="ProductStoreHive\StoreHiveSection.cs" />
+    <Compile Include="ProductStoreHive\StoreHiveSectionCategory.cs" />
+    <Compile Include="ProductStoreHive\StoreHiveSectionCategoryConfiguration.cs" />
+    <Compile Include="ProductStoreHive\StoreHiveSectionConfiguration.cs" />
+    <Compile Include="ProductStore\IProductStoreContext.cs" />
+    <Compile Include="ProductStore\ProductStoreContext.cs" />
+    <Compile Include="ProductStore\StoreItem.cs" />
+    <Compile Include="ProductStore\StoreItemConfiguration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Migrations\201805190719490_InitialCreate.cs" />
     <Compile Include="Migrations\201805190719490_InitialCreate.Designer.cs">
       <DependentUpon>201805190719490_InitialCreate.cs</DependentUpon>
@@ -74,6 +106,7 @@
       <DependentUpon>201806141734165_AddProductDescriptionManCodePrice.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="QueriableExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

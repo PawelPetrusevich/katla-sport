@@ -34,7 +34,7 @@
             var colection = fixture.CreateMany<StoreHive>(5).ToArray();
             context.Setup(x => x.Hives).ReturnsEntitySet(colection);
             context.Setup(x => x.Sections).ReturnsEntitySet(colection[0].Sections.ToList());
-            var hives = await service.GetHives();
+            var hives = await service.GetHivesAsync();
             hives.Count.Should().Be(colection.Length);
         }
 
@@ -47,7 +47,7 @@
         {
             var collection = fixture.CreateMany<StoreHive>(5).ToArray();
             context.Setup(x => x.Hives).ReturnsEntitySet(collection);
-            var hive = await service.GetHive(collection[0].Id);
+            var hive = await service.GetHiveAsync(collection[0].Id);
             hive.Id.Should().Be(collection[0].Id);
         }
 
@@ -58,7 +58,7 @@
             HiveService service)
         {
             context.Setup(x => x.Hives).ReturnsEntitySet(new List<StoreHive>());
-            Func<Task> act = async () => await service.GetHive(0);
+            Func<Task> act = async () => await service.GetHiveAsync(0);
             act.Should().Throw<RequestedResourceNotFoundException>();
         }
 
@@ -72,8 +72,8 @@
             context.Setup(x => x.Hives).ReturnsEntitySet(new List<StoreHive>());
             context.Setup(x => x.Sections).ReturnsEntitySet(new List<StoreHiveSection>());
             var hive = fixture.Create<UpdateHiveRequest>();
-            await service.CreateHive(hive);
-            var hives = await service.GetHives();
+            await service.CreateHiveAsync(hive);
+            var hives = await service.GetHivesAsync();
             hives.Count.Should().Be(1);
         }
 
@@ -87,7 +87,7 @@
             var collection = fixture.CreateMany<StoreHive>(5).ToArray();
             var hive = new UpdateHiveRequest { Code = collection[0].Code };
             context.Setup(x => x.Hives).ReturnsEntitySet(collection);
-            Func<Task> act = async () => await service.CreateHive(hive);
+            Func<Task> act = async () => await service.CreateHiveAsync(hive);
 
             act.Should().Throw<RequestedResourceHasConflictException>();
         }
@@ -104,7 +104,7 @@
             context.Setup(x => x.Sections).ReturnsEntitySet(new List<StoreHiveSection>());
             var address = "New Address";
             var updateHive = new UpdateHiveRequest { Address = address };
-            var result = await service.UpdateHive(collection[0].Id, updateHive);
+            var result = await service.UpdateHiveAsync(collection[0].Id, updateHive);
 
             result.Id.Should().Be(collection[0].Id);
             result.Address.Should().Be(address);
@@ -121,7 +121,7 @@
             contex.Setup(x => x.Hives).ReturnsEntitySet(collection);
             var hive = new UpdateHiveRequest { Code = collection[0].Code };
 
-            Func<Task> act = async () => await service.UpdateHive(1, hive);
+            Func<Task> act = async () => await service.UpdateHiveAsync(1, hive);
 
             act.Should().Throw<RequestedResourceHasConflictException>();
         }
@@ -137,7 +137,7 @@
             contex.Setup(x => x.Hives).ReturnsEntitySet(collection);
             var hive = fixture.Create<UpdateHiveRequest>();
 
-            Func<Task> act = async () => await service.UpdateHive(1, hive);
+            Func<Task> act = async () => await service.UpdateHiveAsync(1, hive);
 
             act.Should().Throw<RequestedResourceNotFoundException>();
         }
@@ -152,10 +152,10 @@
             var collection = fixture.CreateMany<StoreHive>(5).ToList();
             contex.Setup(x => x.Hives).ReturnsEntitySet(collection);
             contex.Setup(x => x.Sections).ReturnsEntitySet(new List<StoreHiveSection>());
-            await service.SetStatus(collection[0].Id, true);
-            await service.DeleteHive(collection[0].Id);
+            await service.SetStatusAsync(collection[0].Id, true);
+            await service.DeleteHiveAsync(collection[0].Id);
 
-            var result = await service.GetHives();
+            var result = await service.GetHivesAsync();
 
             result.Count.Should().Be(4);
         }
@@ -171,7 +171,7 @@
             contex.Setup(x => x.Hives).ReturnsEntitySet(collection);
             contex.Setup(x => x.Sections).ReturnsEntitySet(new List<StoreHiveSection>());
 
-            Func<Task> act = async () => await service.DeleteHive(0);
+            Func<Task> act = async () => await service.DeleteHiveAsync(0);
 
             act.Should().Throw<RequestedResourceNotFoundException>();
         }
@@ -186,9 +186,9 @@
             var collection = fixture.CreateMany<StoreHive>(5).ToList();
             contex.Setup(x => x.Hives).ReturnsEntitySet(collection);
             contex.Setup(x => x.Sections).ReturnsEntitySet(new List<StoreHiveSection>());
-            await service.SetStatus(collection[0].Id, false);
+            await service.SetStatusAsync(collection[0].Id, false);
 
-            Func<Task> act = async () => await service.DeleteHive(collection[0].Id);
+            Func<Task> act = async () => await service.DeleteHiveAsync(collection[0].Id);
 
             act.Should().Throw<RequestedResourceHasConflictException>();
         }
@@ -203,9 +203,9 @@
             var collection = fixture.CreateMany<StoreHive>(5).ToArray();
             contex.Setup(x => x.Hives).ReturnsEntitySet(collection);
 
-            await service.SetStatus(collection[0].Id, true);
+            await service.SetStatusAsync(collection[0].Id, true);
 
-            var result = await service.GetHive(collection[0].Id);
+            var result = await service.GetHiveAsync(collection[0].Id);
 
             result.IsDeleted.Should().BeTrue();
         }
@@ -220,9 +220,9 @@
             var collection = fixture.CreateMany<StoreHive>(5).ToArray();
             contex.Setup(x => x.Hives).ReturnsEntitySet(collection);
 
-            await service.SetStatus(collection[0].Id, false);
+            await service.SetStatusAsync(collection[0].Id, false);
 
-            var result = await service.GetHive(collection[0].Id);
+            var result = await service.GetHiveAsync(collection[0].Id);
 
             result.IsDeleted.Should().BeFalse();
         }
@@ -237,7 +237,7 @@
             var collection = fixture.CreateMany<StoreHive>(5).ToArray();
             contex.Setup(x => x.Hives).ReturnsEntitySet(collection);
 
-            Func<Task> act = async () => await service.SetStatus(0, true);
+            Func<Task> act = async () => await service.SetStatusAsync(0, true);
 
             act.Should().Throw<RequestedResourceNotFoundException>();
         }

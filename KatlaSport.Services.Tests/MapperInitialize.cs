@@ -1,12 +1,11 @@
-﻿
-
-namespace KatlaSport.Services.Tests
+﻿namespace KatlaSport.Services.Tests
 {
     using System;
 
     using AutoMapper;
 
     using KatlaSport.Services.HiveManagement;
+    using KatlaSport.Services.ProductManagement;
 
     public class MapperInitialize
     {
@@ -15,7 +14,11 @@ namespace KatlaSport.Services.Tests
         private MapperInitialize()
         {
             Mapper.Reset();
-            Mapper.Initialize(x => x.AddProfile(new HiveManagementMappingProfile()));
+            Mapper.Initialize(x =>
+            {
+                x.AddProfile(new HiveManagementMappingProfile());
+                x.AddProfile(new ProductManagementMappingProfile());
+            });
         }
 
         public static MapperInitialize Initialize()

@@ -76,7 +76,7 @@ namespace KatlaSport.WebApi.Controllers
                 return this.BadRequest(Resources.ModelIsInvalid);
             }
 
-            var result = await this._hiveSectionService.CreateHiveSection(hiveSection, hiveId);
+            var result = await this._hiveSectionService.CreateHiveSectionAsync(hiveSection, hiveId);
             var location = $"api/sections/{result.Id}";
             return this.Created<HiveSection>(location, result);
         }
@@ -100,7 +100,7 @@ namespace KatlaSport.WebApi.Controllers
                 return this.BadRequest(Resources.ModelIsInvalid);
             }
 
-            var result = await this._hiveSectionService.UpdateHiveSection(id, hiveSection);
+            var result = await this._hiveSectionService.UpdateHiveSectionAsync(id, hiveSection);
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
         }
@@ -114,7 +114,7 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> DeleteHive([FromUri] int id)
         {
-            await this._hiveSectionService.DeleteHiveSection(id);
+            await this._hiveSectionService.DeleteHiveSectionAsync(id);
 
             return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
         }
