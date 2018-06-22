@@ -41,6 +41,7 @@ namespace KatlaSport.Services.ProductManagement
         public async Task<List<ProductCategoryProductListItem>> GetCategoryProductsAsync(int productCategoryId)
         {
             var dbCategories = await _context.Categories.Where(p => p.Id == productCategoryId).ToArrayAsync();
+
             if (dbCategories.Length == 0)
             {
                 throw new RequestedResourceNotFoundException();

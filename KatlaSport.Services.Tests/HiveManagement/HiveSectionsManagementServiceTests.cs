@@ -142,7 +142,7 @@
             context.Setup(x => x.Hives).ReturnsEntitySet(hives);
             context.Setup(x => x.Sections).ReturnsEntitySet(new List<StoreHiveSection>());
             var section = fixture.Create<UpdateHiveSectionRequest>();
-            await service.CreateHiveSection(section, hives[0].Id);
+            await service.CreateHiveSectionAsync(section, hives[0].Id);
 
             var result = await service.GetHiveSectionsAsync();
             result.Count.Should().Be(1);
@@ -160,7 +160,7 @@
             var sections = fixture.CreateMany<StoreHiveSection>(3).ToList();
             context.Setup(x => x.Sections).ReturnsEntitySet(sections);
             var section = new UpdateHiveSectionRequest { Code = sections[0].Code };
-            Func<Task> act = async () => await service.CreateHiveSection(section, hives[0].Id);
+            Func<Task> act = async () => await service.CreateHiveSectionAsync(section, hives[0].Id);
 
             act.Should().Throw<RequestedResourceHasConflictException>();
         }
@@ -177,7 +177,7 @@
             var sections = fixture.CreateMany<StoreHiveSection>(3).ToList();
             context.Setup(x => x.Sections).ReturnsEntitySet(sections);
             var section = fixture.Create<UpdateHiveSectionRequest>();
-            Func<Task> act = async () => await service.CreateHiveSection(section, 20);
+            Func<Task> act = async () => await service.CreateHiveSectionAsync(section, 20);
 
             act.Should().Throw<RequestedResourceNotFoundException>();
         }
@@ -194,7 +194,7 @@
             contex.Setup(x => x.Hives).ReturnsEntitySet(hives);
             contex.Setup(x => x.Sections).ReturnsEntitySet(hiveSections);
             await service.SetStatusAsync(hiveSections[0].Id, true);
-            await service.DeleteHiveSection(hiveSections[0].Id);
+            await service.DeleteHiveSectionAsync(hiveSections[0].Id);
 
             var result = await service.GetHiveSectionsAsync();
 
@@ -213,7 +213,7 @@
             contex.Setup(x => x.Hives).ReturnsEntitySet(hives);
             contex.Setup(x => x.Sections).ReturnsEntitySet(hiveSections);
             await service.SetStatusAsync(hiveSections[0].Id, true);
-            Func<Task> act = async () => await service.DeleteHiveSection(0);
+            Func<Task> act = async () => await service.DeleteHiveSectionAsync(0);
 
             act.Should().Throw<RequestedResourceNotFoundException>();
         }
@@ -230,9 +230,67 @@
             contex.Setup(x => x.Hives).ReturnsEntitySet(hives);
             contex.Setup(x => x.Sections).ReturnsEntitySet(hiveSections);
             await service.SetStatusAsync(hiveSections[0].Id, false);
-            Func<Task> act = async () => await service.DeleteHiveSection(hiveSections[0].Id);
+            Func<Task> act = async () => await service.DeleteHiveSectionAsync(hiveSections[0].Id);
 
             act.Should().Throw<RequestedResourceHasConflictException>();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public async Task UpdateHiveSection_RequestedResourceHasConflictException(
+            [Frozen] Mock<IProductStoreHiveContext> contex,
+            HiveSectionService service,
+            IFixture fixture)
+        {
+            var hiveSection = fixture.CreateMany<StoreHiveSection>(5).ToList();
+            var hive = fixture.CreateMany<StoreHive>(3).ToArray();
+            contex.Setup(x => x.Sections).ReturnsEntitySet(hiveSection);
+            contex.Setup(x => x.Hives).ReturnsEntitySet(hive);
+            Func<Task> act = async () => await service.UpdateHiveSectionAsync(
+                                             hiveSection[0].Id,
+                                             new UpdateHiveSectionRequest
+                                             {
+                                                 Code = hiveSection[1].Code,
+                                                 Name = hiveSection[1].Name
+                                             });
+
+            act.Should().Throw<RequestedResourceHasConflictException>();
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public async Task UpdateHiveSection_CreateFiveElement_UpdateOneElement(
+            [Frozen] Mock<IProductStoreHiveContext> contex,
+            HiveSectionService service,
+            IFixture fixture)
+        {
+            var hiveSection = fixture.CreateMany<StoreHiveSection>(5).ToList();
+            var hive = fixture.CreateMany<StoreHive>(3).ToArray();
+            contex.Setup(x => x.Sections).ReturnsEntitySet(hiveSection);
+            contex.Setup(x => x.Hives).ReturnsEntitySet(hive);
+            var hiveSectionUpdate = fixture.Create<UpdateHiveSectionRequest>();
+            await service.UpdateHiveSectionAsync(hiveSection[0].Id, hiveSectionUpdate);
+
+            var result = await service.GetHiveSectionAsync(hiveSection[0].Id);
+
+            result.Name.Should().Be(hiveSectionUpdate.Name);
+        }
+
+        [Theory]
+        [AutoMoqData]
+        public async Task UpdateHiveSection_RequestedResourceNotFoundException(
+            [Frozen] Mock<IProductStoreHiveContext> contex,
+            HiveSectionService service,
+            IFixture fixture)
+        {
+            var hiveSection = fixture.CreateMany<StoreHiveSection>(5).ToList();
+            var hive = fixture.CreateMany<StoreHive>(3).ToArray();
+            contex.Setup(x => x.Sections).ReturnsEntitySet(hiveSection);
+            contex.Setup(x => x.Hives).ReturnsEntitySet(hive);
+            var hiveSectionUpdate = fixture.Create<UpdateHiveSectionRequest>();
+            Func<Task> act = async () => await service.UpdateHiveSectionAsync(200, hiveSectionUpdate);
+
+            act.Should().Throw<RequestedResourceNotFoundException>();
         }
     }
 }
