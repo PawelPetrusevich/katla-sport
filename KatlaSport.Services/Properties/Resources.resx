@@ -123,6 +123,15 @@
   <data name="HiveNotFound" xml:space="preserve">
     <value>Hive with this ID not found.</value>
   </data>
+  <data name="HiveSectionCodeConflict" xml:space="preserve">
+    <value>Hive section exist with this code.</value>
+  </data>
+  <data name="HiveSectionNotFound" xml:space="preserve">
+    <value>Hive section with this ID not found.</value>
+  </data>
+  <data name="HiveSectionStatusNotDelete" xml:space="preserve">
+    <value>Hive section deleted status not true.</value>
+  </data>
   <data name="HiveStatusNotDelete" xml:space="preserve">
     <value>Hive deleted status not true.</value>
   </data>

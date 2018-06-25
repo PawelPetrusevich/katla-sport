@@ -109,7 +109,7 @@ namespace KatlaSport.Services.HiveManagement
         public async Task DeleteHiveAsync(int hiveId)
         {
             var dbHive = await _context.Hives.SingleOrDefaultAsync(p => p.Id == hiveId).ConfigureAwait(false);
-            if (dbHive != null)
+            if (dbHive == null)
             {
                 throw new RequestedResourceNotFoundException(Resources.HiveNotFound);
             }
