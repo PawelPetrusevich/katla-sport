@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace KatlaSport.WebApi.Properties {
+namespace KatlaSport.Services.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace KatlaSport.WebApi.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KatlaSport.WebApi.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KatlaSport.Services.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,11 +61,11 @@ namespace KatlaSport.WebApi.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hives with this code has in database..
+        ///   Looks up a localized string similar to Hive exist with this code..
         /// </summary>
-        internal static string HiveCreatedError {
+        internal static string HiveCodeConflict {
             get {
-                return ResourceManager.GetString("HiveCreatedError", resourceCulture);
+                return ResourceManager.GetString("HiveCodeConflict", resourceCulture);
             }
         }
         
@@ -79,20 +79,38 @@ namespace KatlaSport.WebApi.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload item is invalid..
+        ///   Looks up a localized string similar to Hive section exist with this code..
         /// </summary>
-        internal static string ModelIsInvalid {
+        internal static string HiveSectionCodeConflict {
             get {
-                return ResourceManager.GetString("ModelIsInvalid", resourceCulture);
+                return ResourceManager.GetString("HiveSectionCodeConflict", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Server error..
+        ///   Looks up a localized string similar to Hive section with this ID not found..
         /// </summary>
-        internal static string ServerError {
+        internal static string HiveSectionNotFound {
             get {
-                return ResourceManager.GetString("ServerError", resourceCulture);
+                return ResourceManager.GetString("HiveSectionNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hive section deleted status not true..
+        /// </summary>
+        internal static string HiveSectionStatusNotDelete {
+            get {
+                return ResourceManager.GetString("HiveSectionStatusNotDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hive deleted status not true..
+        /// </summary>
+        internal static string HiveStatusNotDelete {
+            get {
+                return ResourceManager.GetString("HiveStatusNotDelete", resourceCulture);
             }
         }
     }

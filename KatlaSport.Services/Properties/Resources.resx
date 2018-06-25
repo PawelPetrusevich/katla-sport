@@ -117,16 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="HiveCreatedError" xml:space="preserve">
-    <value>Hives with this code has in database.</value>
+  <data name="HiveCodeConflict" xml:space="preserve">
+    <value>Hive exist with this code.</value>
   </data>
   <data name="HiveNotFound" xml:space="preserve">
     <value>Hive with this ID not found.</value>
   </data>
-  <data name="ModelIsInvalid" xml:space="preserve">
-    <value>Upload item is invalid.</value>
+  <data name="HiveSectionCodeConflict" xml:space="preserve">
+    <value>Hive section exist with this code.</value>
   </data>
-  <data name="ServerError" xml:space="preserve">
-    <value>Server error.</value>
+  <data name="HiveSectionNotFound" xml:space="preserve">
+    <value>Hive section with this ID not found.</value>
+  </data>
+  <data name="HiveSectionStatusNotDelete" xml:space="preserve">
+    <value>Hive section deleted status not true.</value>
+  </data>
+  <data name="HiveStatusNotDelete" xml:space="preserve">
+    <value>Hive deleted status not true.</value>
   </data>
 </root>

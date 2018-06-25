@@ -11,6 +11,7 @@ using Swashbuckle.Swagger.Annotations;
 
 namespace KatlaSport.WebApi.Controllers
 {
+    using KatlaSport.Services;
     using KatlaSport.WebApi.Properties;
 
     [ApiVersion("1.0")]
@@ -29,54 +30,140 @@ namespace KatlaSport.WebApi.Controllers
             _hiveSectionService = hiveSectionService ?? throw new ArgumentNullException(nameof(hiveSectionService));
         }
 
+        /// <summary>
+        /// Get hives async
+        /// </summary>
+        /// <returns>
+        /// The <see cref="Task{IHttpActionResult}"/>.
+        /// </returns>
         [HttpGet]
         [Route("")]
         [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a list of hives.", Type = typeof(HiveListItem[]))]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
         public async Task<IHttpActionResult> GetHives()
         {
-            var hives = await _hiveService.GetHivesAsync();
-            return Ok(hives);
+            try
+            {
+                var hives = await _hiveService.GetHivesAsync();
+                return this.Ok(hives);
+            }
+            catch (Exception)
+            {
+                return this.InternalServerError();
+            }
         }
 
+        /// <summary>
+        /// Get hive async by id.
+        /// </summary>
+        /// <param name="hiveId">
+        /// Hive id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task{IHttpActionResult}"/>.
+        /// </returns>
         [HttpGet]
         [Route("{hiveId:int:min(1)}")]
         [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a hive.", Type = typeof(Hive))]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
-        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Hive not found", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
         public async Task<IHttpActionResult> GetHive(int hiveId)
         {
-            var hive = await _hiveService.GetHiveAsync(hiveId);
-            return Ok(hive);
+            try
+            {
+                var hive = await _hiveService.GetHiveAsync(hiveId);
+                return Ok(hive);
+            }
+            catch (RequestedResourceNotFoundException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return this.InternalServerError();
+            }
         }
 
+        /// <summary>
+        /// Get hive sections async by hive id.
+        /// </summary>
+        /// <param name="hiveId">
+        /// The hive id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task{IHttpActionResult}"/>.
+        /// </returns>
         [HttpGet]
         [Route("{hiveId:int:min(1)}/sections")]
         [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a list of hive sections for specified hive.", Type = typeof(HiveSectionListItem))]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
-        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Hive not found", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server Error", Type = typeof(string))]
         public async Task<IHttpActionResult> GetHiveSections(int hiveId)
         {
-            var hive = await _hiveSectionService.GetHiveSectionsAsync(hiveId);
-            return Ok(hive);
+            try
+            {
+                var hive = await _hiveSectionService.GetHiveSectionsAsync(hiveId);
+                return Ok(hive);
+            }
+            catch (RequestedResourceNotFoundException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return this.InternalServerError();
+            }
         }
 
+        /// <summary>
+        /// Set hive deleted status.
+        /// </summary>
+        /// <param name="hiveId">
+        /// The hive id.
+        /// </param>
+        /// <param name="deletedStatus">
+        /// Bool deleted status.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task{IHttpActionResult}"/>.
+        /// </returns>
         [HttpPut]
         [Route("{hiveId:int:min(1)}/status/{deletedStatus:bool}")]
-        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Sets deleted status for an existed hive.")]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
-        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Sets deleted status for an existed hive.", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Hive not found", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
         public async Task<IHttpActionResult> SetStatus([FromUri] int hiveId, [FromUri] bool deletedStatus)
         {
-            await _hiveService.SetStatusAsync(hiveId, deletedStatus);
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+            try
+            {
+                await _hiveService.SetStatusAsync(hiveId, deletedStatus);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+            }
+            catch (RequestedResourceNotFoundException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return this.InternalServerError();
+            }
         }
 
+        /// <summary>
+        /// Create hive.
+        /// </summary>
+        /// <param name="hive">
+        /// Update hive request.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task{IHttpActionResult}"/>.
+        /// </returns>
         [HttpPost]
         [Route("addHive")]
         [SwaggerResponse(HttpStatusCode.Created, Description = "Return created hive", Type = typeof(Hive))]
-        [SwaggerResponse(HttpStatusCode.BadRequest)]
-        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Hive model value is invalid or null", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.Conflict, Description = "Hive exists with this code", Type = typeof(string))]
         public async Task<IHttpActionResult> CreateHive([FromBody] UpdateHiveRequest hive)
         {
             if (hive == null)
@@ -89,18 +176,41 @@ namespace KatlaSport.WebApi.Controllers
                 return this.BadRequest(Resources.ModelIsInvalid);
             }
 
-            var result = await this._hiveService.CreateHiveAsync(hive);
-            var location = $"api/hives/{result.Id}";
-            return this.Created<Hive>(location, result);
+            try
+            {
+                var result = await this._hiveService.CreateHiveAsync(hive);
+                var location = $"api/hives/{result.Id}";
+                return this.Created<Hive>(location, result);
+            }
+            catch (RequestedResourceHasConflictException ex)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Conflict, ex.Message));
+            }
+            catch (Exception)
+            {
+                return this.InternalServerError();
+            }
         }
 
+        /// <summary>
+        /// Update hive.
+        /// </summary>
+        /// <param name="id">
+        /// Hive id.
+        /// </param>
+        /// <param name="hive">
+        /// Update hive request model.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task{IHttpActionResult}"/>.
+        /// </returns>
         [HttpPut]
         [Route("update/{id:int:min(1)}")]
         [SwaggerResponse(HttpStatusCode.NoContent, Description = "Updates an existed hive.")]
-        [SwaggerResponse(HttpStatusCode.BadRequest)]
-        [SwaggerResponse(HttpStatusCode.Conflict)]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
-        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Hive model value is invalid or null", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.Conflict, Description = "Hive exists with this code", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.NotFound, Description = "Hive exists with this ID", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
         public async Task<IHttpActionResult> UpdateHive([FromUri] int id, [FromBody] UpdateHiveRequest hive)
         {
             if (hive == null)
@@ -113,23 +223,59 @@ namespace KatlaSport.WebApi.Controllers
                 return this.BadRequest(Resources.ModelIsInvalid);
             }
 
-            var result = await this._hiveService.UpdateHiveAsync(id, hive);
-
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+            try
+            {
+                await this._hiveService.UpdateHiveAsync(id, hive);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+            }
+            catch (RequestedResourceHasConflictException ex)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Conflict, ex.Message));
+            }
+            catch (RequestedResourceNotFoundException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return this.InternalServerError();
+            }
         }
 
+        /// <summary>
+        /// Delete hive.
+        /// </summary>
+        /// <param name="id">
+        /// Hive id.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task{IHttpActionResult}"/>.
+        /// </returns>
         [HttpDelete]
         [Route("{id:int:min(1)}")]
-        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Deletes an existed hive.")]
-        [SwaggerResponse(HttpStatusCode.BadRequest)]
-        [SwaggerResponse(HttpStatusCode.Conflict)]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
-        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Deletes an existed hive.", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Hive with this ID not found", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.Conflict, Description = "Deleted status not true", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
         public async Task<IHttpActionResult> DeleteHive([FromUri] int id)
         {
-            await this._hiveService.DeleteHiveAsync(id);
-
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+            try
+            {
+                await this._hiveService.DeleteHiveAsync(id);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+            }
+            catch (RequestedResourceNotFoundException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
+            catch (RequestedResourceHasConflictException ex)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Conflict, ex.Message));
+            }
+            catch (Exception)
+            {
+                return this.InternalServerError();
+            }
         }
     }
 }

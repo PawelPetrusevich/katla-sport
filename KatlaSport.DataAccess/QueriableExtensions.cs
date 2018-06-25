@@ -5,6 +5,9 @@ using Extensions = System.Data.Entity.QueryableExtensions;
 
 namespace KatlaSport.DataAccess
 {
+    using System;
+    using System.Linq.Expressions;
+
     public static class QueriableExtensions
     {
         public static Task<List<T>> ToListAsync<T>(this IQueryable<T> source)
@@ -38,6 +41,17 @@ namespace KatlaSport.DataAccess
             }
 
             return Extensions.CountAsync(source);
+        }
+
+        public static Task<T> SingleOrDefaultAsync<T>(this IQueryable<T> source, Expression<Func<T, bool>> predicate)
+            where T : class
+        {
+            if (source is EntitySet<T>)
+            {
+                source = (source as EntitySet<T>).DbSet;
+            }
+
+            return Extensions.SingleOrDefaultAsync(source, predicate);
         }
     }
 }

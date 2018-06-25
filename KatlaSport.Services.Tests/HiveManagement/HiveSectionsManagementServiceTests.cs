@@ -63,7 +63,7 @@
         {
             var section = fixture.Create<StoreHiveSection>();
             context.Setup(x => x.Sections).ReturnsEntitySet(new StoreHiveSection[] { section });
-            Func<Task> act = async () => await service.SetStatusAsync(15, true);
+            Func<Task> act = async () => await service.SetStatusAsync(0, true);
             act.Should().Throw<RequestedResourceNotFoundException>();
         }
 
@@ -126,6 +126,8 @@
             IFixture fixture)
         {
             var colections = fixture.CreateMany<StoreHiveSection>(5).ToArray();
+            var hives = new List<StoreHive> { new StoreHive { Id = colections[0].StoreHiveId } };
+            context.Setup(x => x.Hives).ReturnsEntitySet(hives);
             context.Setup(x => x.Sections).ReturnsEntitySet(colections);
             var section = await service.GetHiveSectionsAsync(colections[0].StoreHiveId);
             section[0].Id.Should().Be(colections[0].Id);
