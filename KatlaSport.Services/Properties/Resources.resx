@@ -144,4 +144,13 @@
   <data name="ProductCategoryStatusNotDelete" xml:space="preserve">
     <value>Product category status not true.</value>
   </data>
+  <data name="ProductCodeError" xml:space="preserve">
+    <value>Product with this code exists.</value>
+  </data>
+  <data name="ProductNotFound" xml:space="preserve">
+    <value>Product with this ID not found.</value>
+  </data>
+  <data name="ProductStatusNotDelete" xml:space="preserve">
+    <value>Product status not true.</value>
+  </data>
 </root>

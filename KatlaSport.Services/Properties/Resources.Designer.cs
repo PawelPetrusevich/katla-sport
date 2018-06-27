@@ -140,5 +140,32 @@ namespace KatlaSport.Services.Properties {
                 return ResourceManager.GetString("ProductCategoryStatusNotDelete", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product with this code exists..
+        /// </summary>
+        internal static string ProductCodeError {
+            get {
+                return ResourceManager.GetString("ProductCodeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product with this ID not found..
+        /// </summary>
+        internal static string ProductNotFound {
+            get {
+                return ResourceManager.GetString("ProductNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product status not true..
+        /// </summary>
+        internal static string ProductStatusNotDelete {
+            get {
+                return ResourceManager.GetString("ProductStatusNotDelete", resourceCulture);
+            }
+        }
     }
 }
