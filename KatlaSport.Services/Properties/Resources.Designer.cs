@@ -113,5 +113,32 @@ namespace KatlaSport.Services.Properties {
                 return ResourceManager.GetString("HiveStatusNotDelete", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product category with this code exists..
+        /// </summary>
+        internal static string ProductCategoryCodeError {
+            get {
+                return ResourceManager.GetString("ProductCategoryCodeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product category with this ID not found..
+        /// </summary>
+        internal static string ProductCategoryNotFound {
+            get {
+                return ResourceManager.GetString("ProductCategoryNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Product category status not true..
+        /// </summary>
+        internal static string ProductCategoryStatusNotDelete {
+            get {
+                return ResourceManager.GetString("ProductCategoryStatusNotDelete", resourceCulture);
+            }
+        }
     }
 }

@@ -41,7 +41,7 @@ namespace KatlaSport.Services.HiveManagement
         /// <inheritdoc/>
         public async Task<HiveSection> GetHiveSectionAsync(int hiveSectionId)
         {
-            var dbHiveSection = await _context.Sections.SingleOrDefaultAsync(s => s.Id == hiveSectionId).ConfigureAwait(false);
+            var dbHiveSection = await _context.Sections.FirstOrDefaultAsync(s => s.Id == hiveSectionId).ConfigureAwait(false);
 
             if (dbHiveSection == null)
             {
@@ -54,7 +54,7 @@ namespace KatlaSport.Services.HiveManagement
         /// <inheritdoc/>
         public async Task<List<HiveSectionListItem>> GetHiveSectionsAsync(int hiveId)
         {
-            var dbHive = await _context.Hives.SingleOrDefaultAsync(x => x.Id == hiveId).ConfigureAwait(false);
+            var dbHive = await _context.Hives.FirstOrDefaultAsync(x => x.Id == hiveId).ConfigureAwait(false);
 
             if (dbHive == null)
             {
@@ -69,7 +69,7 @@ namespace KatlaSport.Services.HiveManagement
         /// <inheritdoc/>
         public async Task SetStatusAsync(int hiveSectionId, bool deletedStatus)
         {
-            var dbHiveSection = await _context.Sections.SingleOrDefaultAsync(x => x.Id == hiveSectionId).ConfigureAwait(false);
+            var dbHiveSection = await _context.Sections.FirstOrDefaultAsync(x => x.Id == hiveSectionId).ConfigureAwait(false);
 
             if (dbHiveSection == null)
             {
@@ -88,13 +88,13 @@ namespace KatlaSport.Services.HiveManagement
         /// <inheritdoc/>
         public async Task<HiveSection> CreateHiveSectionAsync(UpdateHiveSectionRequest hiveSection, int hiveId)
         {
-            var dbHiveSections = await _context.Sections.SingleOrDefaultAsync(x => x.Code == hiveSection.Code).ConfigureAwait(false);
+            var dbHiveSections = await _context.Sections.FirstOrDefaultAsync(x => x.Code == hiveSection.Code).ConfigureAwait(false);
             if (dbHiveSections != null)
             {
                 throw new RequestedResourceHasConflictException(Resources.HiveSectionCodeConflict);
             }
 
-            var dbHive = await _context.Hives.SingleOrDefaultAsync(x => x.Id == hiveId).ConfigureAwait(false);
+            var dbHive = await _context.Hives.FirstOrDefaultAsync(x => x.Id == hiveId).ConfigureAwait(false);
 
             if (dbHive == null)
             {
@@ -116,13 +116,13 @@ namespace KatlaSport.Services.HiveManagement
         /// <inheritdoc/>
         public async Task<HiveSection> UpdateHiveSectionAsync(int hiveSectionId, UpdateHiveSectionRequest hiveSection)
         {
-            var dbHivesSection = await _context.Sections.SingleOrDefaultAsync(p => p.Code == hiveSection.Code && p.Id != hiveSectionId).ConfigureAwait(false);
+            var dbHivesSection = await _context.Sections.FirstOrDefaultAsync(p => p.Code == hiveSection.Code && p.Id != hiveSectionId).ConfigureAwait(false);
             if (dbHivesSection != null)
             {
                 throw new RequestedResourceHasConflictException(Resources.HiveSectionCodeConflict);
             }
 
-            dbHivesSection = await _context.Sections.SingleOrDefaultAsync(p => p.Id == hiveSectionId).ConfigureAwait(false);
+            dbHivesSection = await _context.Sections.FirstOrDefaultAsync(p => p.Id == hiveSectionId).ConfigureAwait(false);
 
             if (dbHivesSection == null)
             {
@@ -140,7 +140,7 @@ namespace KatlaSport.Services.HiveManagement
         /// <inheritdoc/>
         public async Task DeleteHiveSectionAsync(int hiveSecionId)
         {
-            var dbHivesSection = await _context.Sections.SingleOrDefaultAsync(p => p.Id == hiveSecionId).ConfigureAwait(false);
+            var dbHivesSection = await _context.Sections.FirstOrDefaultAsync(p => p.Id == hiveSecionId).ConfigureAwait(false);
 
             if (dbHivesSection == null)
             {

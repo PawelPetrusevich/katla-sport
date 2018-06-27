@@ -135,4 +135,13 @@
   <data name="HiveStatusNotDelete" xml:space="preserve">
     <value>Hive deleted status not true.</value>
   </data>
+  <data name="ProductCategoryCodeError" xml:space="preserve">
+    <value>Product category with this code exists.</value>
+  </data>
+  <data name="ProductCategoryNotFound" xml:space="preserve">
+    <value>Product category with this ID not found.</value>
+  </data>
+  <data name="ProductCategoryStatusNotDelete" xml:space="preserve">
+    <value>Product category status not true.</value>
+  </data>
 </root>

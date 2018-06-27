@@ -11,6 +11,9 @@ using Swashbuckle.Swagger.Annotations;
 
 namespace KatlaSport.WebApi.Controllers
 {
+    using KatlaSport.Services;
+
+    // todo routes
     [ApiVersion("1.0")]
     [RoutePrefix("api/categories")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
@@ -27,43 +30,92 @@ namespace KatlaSport.WebApi.Controllers
             _productCatalogueService = productCatalogueService ?? throw new ArgumentNullException(nameof(productCatalogueService));
         }
 
+        /// <summary>
+        /// The get product categories.
+        /// </summary>
+        /// <param name="start">
+        /// The start.
+        /// </param>
+        /// <param name="amount">
+        /// The amount.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
         [HttpGet]
         [Route("")]
         [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a list of product categories.", Type = typeof(ProductCategoryListItem[]))]
-        [SwaggerResponse(HttpStatusCode.BadRequest)]
-        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Start or amount value is invalid.", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
         public async Task<IHttpActionResult> GetProductCategories([FromUri] int start = 0, [FromUri] int amount = 100)
         {
             if (start < 0)
             {
                 return BadRequest("start");
             }
+
             if (amount < 0)
             {
                 return BadRequest("end");
             }
 
-            var categories = await _categoryService.GetCategoriesAsync(start, amount);
-            return Ok(categories);
+            try
+            {
+                var categories = await _categoryService.GetCategoriesAsync(start, amount);
+                return Ok(categories);
+            }
+            catch (Exception)
+            {
+                return this.InternalServerError();
+            }
         }
 
+        /// <summary>
+        /// The get product category.
+        /// </summary>
+        /// <param name="id">
+        /// Product catygory ID.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
         [HttpGet]
         [Route("{id:int:min(1)}")]
         [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a product category.", Type = typeof(ProductCategory))]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
-        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Product cotegory with this ID not found", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
         public async Task<IHttpActionResult> GetProductCategory([FromUri] int id)
         {
-            var category = await _categoryService.GetCategoryAsync(id);
-            return Ok(category);
+            try
+            {
+                var category = await _categoryService.GetCategoryAsync(id);
+                return Ok(category);
+            }
+            catch (RequestedResourceNotFoundException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return this.InternalServerError();
+            }
         }
 
+        /// <summary>
+        /// The add product category.
+        /// </summary>
+        /// <param name="createRequest">
+        /// Created product category model.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
         [HttpPost]
         [Route("")]
-        [SwaggerResponse(HttpStatusCode.Created, Description = "Creates a new product category.")]
-        [SwaggerResponse(HttpStatusCode.BadRequest)]
-        [SwaggerResponse(HttpStatusCode.Conflict)]
-        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        [SwaggerResponse(HttpStatusCode.Created, Description = "Creates a new product category.", Type = typeof(ProductCategory))]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Model is invalid", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.Conflict, Description = "Product cotegory with this code exists.", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
         public async Task<IHttpActionResult> AddProductCategory([FromBody] UpdateProductCategoryRequest createRequest)
         {
             if (!ModelState.IsValid)
@@ -71,18 +123,40 @@ namespace KatlaSport.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var category = await _categoryService.CreateCategoryAsync(createRequest);
-            var location = string.Format("/api/categories/{0}", category.Id);
-            return Created<ProductCategory>(location, category);
+            try
+            {
+                var category = await _categoryService.CreateCategoryAsync(createRequest);
+                var location = string.Format("/api/categories/{0}", category.Id);
+                return Created<ProductCategory>(location, category);
+            }
+            catch (RequestedResourceHasConflictException ex)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Conflict, ex.Message));
+            }
+            catch (Exception)
+            {
+                return this.InternalServerError();
+            }
         }
 
+        /// <summary>
+        /// The update product category.
+        /// </summary>
+        /// <param name="id">
+        /// Product category ID.
+        /// </param>
+        /// <param name="updateRequest">
+        /// Update model.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
         [HttpPut]
         [Route("{id:int:min(1)}")]
         [SwaggerResponse(HttpStatusCode.NoContent, Description = "Updates an existed product category.")]
-        [SwaggerResponse(HttpStatusCode.BadRequest)]
-        [SwaggerResponse(HttpStatusCode.Conflict)]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
-        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Model is invalid or product cotegory with this ID not found", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.Conflict, Description = "Product cotegory with this code exists.", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
         public async Task<IHttpActionResult> UpdateProductCategory([FromUri] int id, [FromBody] UpdateProductCategoryRequest updateRequest)
         {
             if (!ModelState.IsValid)
@@ -90,43 +164,125 @@ namespace KatlaSport.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            await _categoryService.UpdateCategoryAsync(id, updateRequest);
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+            try
+            {
+                // todo return value
+                await _categoryService.UpdateCategoryAsync(id, updateRequest);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+            }
+            catch (RequestedResourceHasConflictException ex)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Conflict, ex.Message));
+            }
+            catch (RequestedResourceNotFoundException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return this.InternalServerError();
+            }
         }
 
+        /// <summary>
+        /// The delete product category.
+        /// </summary>
+        /// <param name="id">
+        /// Product category ID.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
         [HttpDelete]
         [Route("{id:int:min(1)}")]
         [SwaggerResponse(HttpStatusCode.NoContent, Description = "Deletes an existed product category.")]
-        [SwaggerResponse(HttpStatusCode.BadRequest)]
-        [SwaggerResponse(HttpStatusCode.Conflict)]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
-        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Product category with this ID not found", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.Conflict, Description = "Deleted status not true", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
         public async Task<IHttpActionResult> DeleteProductCategory([FromUri] int id)
         {
-            await _categoryService.DeleteCategoryAsync(id);
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+            try
+            {
+                await _categoryService.DeleteCategoryAsync(id);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+            }
+            catch (RequestedResourceNotFoundException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
+            catch (RequestedResourceHasConflictException ex)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(HttpStatusCode.Conflict, ex.Message));
+            }
+            catch (Exception)
+            {
+                return this.InternalServerError();
+            }
         }
 
+        /// <summary>
+        /// The set delete status.
+        /// </summary>
+        /// <param name="id">
+        /// Product category ID.
+        /// </param>
+        /// <param name="deletedStatus">
+        /// Boolean deleted status.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
         [HttpPut]
         [Route("{id:int:min(1)}/status/{deletedStatus:bool}")]
         [SwaggerResponse(HttpStatusCode.NoContent, Description = "Sets deleted status for an existed product category.")]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
-        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Product category with this ID not found", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
         public async Task<IHttpActionResult> SetStatus([FromUri] int id, [FromUri] bool deletedStatus)
         {
-            await _categoryService.SetStatusAsync(id, deletedStatus);
-            return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+            try
+            {
+                await _categoryService.SetStatusAsync(id, deletedStatus);
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+            }
+            catch (RequestedResourceNotFoundException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return this.InternalServerError();
+            }
         }
 
+        /// <summary>
+        /// The get products by product category ID.
+        /// </summary>
+        /// <param name="id">
+        /// Product category ID.
+        /// </param>
+        /// <returns>
+        /// The <see cref="Task"/>.
+        /// </returns>
         [HttpGet]
         [Route("{id:int:min(1)}/products")]
         [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a list of products for requested product category.", Type = typeof(ProductCategoryProductListItem))]
-        [SwaggerResponse(HttpStatusCode.NotFound)]
-        [SwaggerResponse(HttpStatusCode.InternalServerError)]
+        [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Product category with this ID not found", Type = typeof(string))]
+        [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
         public async Task<IHttpActionResult> GetProducts([FromUri] int id)
         {
-            var products = await _productCatalogueService.GetCategoryProductsAsync(id);
-            return Ok(products);
+            try
+            {
+                var products = await _productCatalogueService.GetCategoryProductsAsync(id);
+                return Ok(products);
+            }
+            catch (RequestedResourceNotFoundException ex)
+            {
+                return this.BadRequest(ex.Message);
+            }
+            catch (Exception)
+            {
+                return this.InternalServerError();
+            }
         }
     }
 }

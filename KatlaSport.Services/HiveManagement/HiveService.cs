@@ -48,7 +48,7 @@ namespace KatlaSport.Services.HiveManagement
         /// <inheritdoc/>
         public async Task<Hive> GetHiveAsync(int hiveId)
         {
-            var dbHives = await _context.Hives.SingleOrDefaultAsync(h => h.Id == hiveId).ConfigureAwait(false);
+            var dbHives = await _context.Hives.FirstOrDefaultAsync(h => h.Id == hiveId).ConfigureAwait(false);
 
             if (dbHives == null)
             {
@@ -61,7 +61,7 @@ namespace KatlaSport.Services.HiveManagement
         /// <inheritdoc/>
         public async Task<Hive> CreateHiveAsync(UpdateHiveRequest createRequest)
         {
-            var hive = await _context.Hives.SingleOrDefaultAsync(h => h.Code == createRequest.Code).ConfigureAwait(false);
+            var hive = await _context.Hives.FirstOrDefaultAsync(h => h.Code == createRequest.Code).ConfigureAwait(false);
 
             if (hive != null)
             {
@@ -84,13 +84,13 @@ namespace KatlaSport.Services.HiveManagement
         /// <inheritdoc/>
         public async Task<Hive> UpdateHiveAsync(int hiveId, UpdateHiveRequest updateRequest)
         {
-            var dbHive = await _context.Hives.SingleOrDefaultAsync(p => p.Code == updateRequest.Code && p.Id != hiveId).ConfigureAwait(false);
+            var dbHive = await _context.Hives.FirstOrDefaultAsync(p => p.Code == updateRequest.Code && p.Id != hiveId).ConfigureAwait(false);
             if (dbHive != null)
             {
                 throw new RequestedResourceHasConflictException(Resources.HiveCodeConflict);
             }
 
-            dbHive = await _context.Hives.SingleOrDefaultAsync(p => p.Id == hiveId).ConfigureAwait(false);
+            dbHive = await _context.Hives.FirstOrDefaultAsync(p => p.Id == hiveId).ConfigureAwait(false);
 
             if (dbHive == null)
             {
@@ -108,7 +108,7 @@ namespace KatlaSport.Services.HiveManagement
         /// <inheritdoc/>
         public async Task DeleteHiveAsync(int hiveId)
         {
-            var dbHive = await _context.Hives.SingleOrDefaultAsync(p => p.Id == hiveId).ConfigureAwait(false);
+            var dbHive = await _context.Hives.FirstOrDefaultAsync(p => p.Id == hiveId).ConfigureAwait(false);
             if (dbHive == null)
             {
                 throw new RequestedResourceNotFoundException(Resources.HiveNotFound);
@@ -126,7 +126,7 @@ namespace KatlaSport.Services.HiveManagement
         /// <inheritdoc/>
         public async Task SetStatusAsync(int hiveId, bool deletedStatus)
         {
-            var dbHive = await _context.Hives.SingleOrDefaultAsync(x => x.Id == hiveId).ConfigureAwait(false);
+            var dbHive = await _context.Hives.FirstOrDefaultAsync(x => x.Id == hiveId).ConfigureAwait(false);
 
             if (dbHive == null)
             {
