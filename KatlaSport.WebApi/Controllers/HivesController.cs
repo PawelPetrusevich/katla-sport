@@ -40,7 +40,7 @@ namespace KatlaSport.WebApi.Controllers
         [Route("")]
         [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a list of hives.", Type = typeof(HiveListItem[]))]
         [SwaggerResponse(HttpStatusCode.InternalServerError)]
-        public async Task<IHttpActionResult> GetHives()
+        public async Task<IHttpActionResult> GetHivesAsync()
         {
             try
             {
@@ -67,7 +67,7 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a hive.", Type = typeof(Hive))]
         [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Hive not found", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
-        public async Task<IHttpActionResult> GetHive(int hiveId)
+        public async Task<IHttpActionResult> GetHiveAsync(int hiveId)
         {
             try
             {
@@ -98,7 +98,7 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.OK, Description = "Returns a list of hive sections for specified hive.", Type = typeof(HiveSectionListItem))]
         [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Hive not found", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server Error", Type = typeof(string))]
-        public async Task<IHttpActionResult> GetHiveSections(int hiveId)
+        public async Task<IHttpActionResult> GetHiveSectionsAsync(int hiveId)
         {
             try
             {
@@ -132,7 +132,7 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.NoContent, Description = "Sets deleted status for an existed hive.", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Hive not found", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
-        public async Task<IHttpActionResult> SetStatus([FromUri] int hiveId, [FromUri] bool deletedStatus)
+        public async Task<IHttpActionResult> SetStatusAsync([FromUri] int hiveId, [FromUri] bool deletedStatus)
         {
             try
             {
@@ -164,7 +164,7 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Hive model value is invalid or null", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.Conflict, Description = "Hive exists with this code", Type = typeof(string))]
-        public async Task<IHttpActionResult> CreateHive([FromBody] UpdateHiveRequest hive)
+        public async Task<IHttpActionResult> CreateHiveAsync([FromBody] UpdateHiveRequest hive)
         {
             if (hive == null)
             {
@@ -211,7 +211,7 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.Conflict, Description = "Hive exists with this code", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.NotFound, Description = "Hive exists with this ID", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
-        public async Task<IHttpActionResult> UpdateHive([FromUri] int id, [FromBody] UpdateHiveRequest hive)
+        public async Task<IHttpActionResult> UpdateHiveAsync([FromUri] int id, [FromBody] UpdateHiveRequest hive)
         {
             if (hive == null)
             {
@@ -257,7 +257,7 @@ namespace KatlaSport.WebApi.Controllers
         [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Hive with this ID not found", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.Conflict, Description = "Deleted status not true", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
-        public async Task<IHttpActionResult> DeleteHive([FromUri] int id)
+        public async Task<IHttpActionResult> DeleteHiveASync([FromUri] int id)
         {
             try
             {
