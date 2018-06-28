@@ -19,6 +19,8 @@ import { ProductCategoryProductListComponent } from 'app/product-management/list
 import { ProductListComponent } from 'app/product-management/lists/product-list.component';
 import { ProductCategoryService } from 'app/product-management/services/product-category.service';
 import { ProductService } from 'app/product-management/services/product.service';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 @NgModule({
   declarations: [
@@ -40,6 +42,8 @@ import { ProductService } from 'app/product-management/services/product.service'
     FormsModule,
     NgbModule.forRoot(),
     HttpClientModule,
+    BrowserAnimationsModule,
+    SimpleNotificationsModule.forRoot(),
     // Application imports
     AppRoutingModule,
   ],

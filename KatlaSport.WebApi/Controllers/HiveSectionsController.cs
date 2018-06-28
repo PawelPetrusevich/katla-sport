@@ -180,7 +180,7 @@ namespace KatlaSport.WebApi.Controllers
         /// </returns>
         [HttpPut]
         [Route("update/{id:int:min(1)}")]
-        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Updates an existed hive section.")]
+        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Updates an existed hive section.", Type = typeof(HiveSection))]
         [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Hive section with this ID not found or hive section model is invalid.", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.Conflict, Description = "Hive section exists with this code.", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
@@ -198,8 +198,8 @@ namespace KatlaSport.WebApi.Controllers
 
             try
             {
-                await this._hiveSectionService.UpdateHiveSectionAsync(id, hiveSection);
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+                var result = await this._hiveSectionService.UpdateHiveSectionAsync(id, hiveSection);
+                return this.Ok(result);
             }
             catch (RequestedResourceNotFoundException ex)
             {

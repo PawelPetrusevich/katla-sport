@@ -22,15 +22,15 @@ export class ProductCategoryService {
   }
 
   addProductCategory(productCategory: ProductCategory): Observable<ProductCategory> {
-    return this.http.post<ProductCategory>(this.url, productCategory);
+    return this.http.post<ProductCategory>(`${this.url}addProductCategory`, productCategory);
   }
 
   updateProductCategory(productCategory: ProductCategory): Observable<ProductCategory> {
-    return this.http.put<ProductCategory>(`${this.url}${productCategory.id}`, productCategory);
+    return this.http.put<ProductCategory>(`${this.url}update/${productCategory.id}`, productCategory);
   }
 
   deleteProductCategory(productCategoryId: number): Observable<Object> {
-    return this.http.delete<Object>(`${this.url}${productCategoryId}`);
+    return this.http.delete<Object>(`${this.url}delete/${productCategoryId}`);
   }
 
   setProductCategoryStatus(productCategoryId: number, deletedStatus: boolean): Observable<Object> {

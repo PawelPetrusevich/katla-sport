@@ -208,7 +208,7 @@
         /// </returns>
         [HttpPut]
         [Route("update/{id:int:min(1)}")]
-        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Updates an existed hive.")]
+        [SwaggerResponse(HttpStatusCode.OK, Description = "Updates an existed hive.",Type = typeof(Hive))]
         [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Hive model value is invalid or null", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.Conflict, Description = "Hive exists with this code", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.NotFound, Description = "Hive exists with this ID", Type = typeof(string))]
@@ -227,8 +227,8 @@
 
             try
             {
-                await this._hiveService.UpdateHiveAsync(id, hive);
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+                var result = await this._hiveService.UpdateHiveAsync(id, hive);
+                return this.Ok(result);
             }
             catch (RequestedResourceHasConflictException ex)
             {

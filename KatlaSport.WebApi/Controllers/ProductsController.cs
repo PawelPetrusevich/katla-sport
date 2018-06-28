@@ -13,7 +13,6 @@ namespace KatlaSport.WebApi.Controllers
 {
     using KatlaSport.Services;
 
-    // todo routes
     [ApiVersion("1.0")]
     [RoutePrefix("api/products")]
     [EnableCors(origins: "*", headers: "*", methods: "*")]
@@ -108,7 +107,7 @@ namespace KatlaSport.WebApi.Controllers
         /// The <see cref="Task"/>.
         /// </returns>
         [HttpPost]
-        [Route("")]
+        [Route("addProduct")]
         [SwaggerResponse(HttpStatusCode.Created, Description = "Creates a new product.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Model is invalid", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.Conflict, Description = "Product with this code exists", Type = typeof(string))]
@@ -149,8 +148,8 @@ namespace KatlaSport.WebApi.Controllers
         /// The <see cref="Task"/>.
         /// </returns>
         [HttpPut]
-        [Route("{id:int:min(1)}")]
-        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Updates an existed product.")]
+        [Route("update/{id:int:min(1)}")]
+        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Updates an existed product.", Type = typeof(Product))]
         [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Product with this ID not found or model is invalid", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.Conflict, Description = "Product with this code exists", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
@@ -163,9 +162,8 @@ namespace KatlaSport.WebApi.Controllers
 
             try
             {
-                // todo return value
-                await _productService.UpdateProductAsync(id, updateRequest);
-                return ResponseMessage(Request.CreateResponse(HttpStatusCode.NoContent));
+                var result = await _productService.UpdateProductAsync(id, updateRequest);
+                return this.Ok(result);
             }
             catch (RequestedResourceNotFoundException ex)
             {
@@ -191,7 +189,7 @@ namespace KatlaSport.WebApi.Controllers
         /// The <see cref="Task"/>.
         /// </returns>
         [HttpDelete]
-        [Route("{id:int:min(1)}")]
+        [Route("delete/{id:int:min(1)}")]
         [SwaggerResponse(HttpStatusCode.NoContent, Description = "Deletes an existed product.")]
         [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Product with this ID not found", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.Conflict, Description = "Deleted status nit true", Type = typeof(string))]

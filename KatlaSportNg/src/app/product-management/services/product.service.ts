@@ -28,14 +28,18 @@ export class ProductService {
   }
 
   addProduct(product: Product): Observable<Product> {
-    return this.http.post<Product>(`${this.url}`, product);
+    return this.http.post<Product>(`${this.url}addProduct`, product);
   }
 
   updateProduct(product: Product): Observable<Object> {
-    return this.http.put<Object>(`${this.url}${product.id}`, product);
+    return this.http.put<Object>(`${this.url}update/${product.id}`, product);
   }
 
   deleteProduct(productId: number): Observable<Object> {
-    return this.http.delete<Object>(`${this.url}${productId}`);
+    return this.http.delete<Object>(`${this.url}delete/${productId}`);
+  }
+
+  setStatus(productId: number,status: boolean): Observable<Object> {
+    return this.http.put<Object>(`${this.url}${productId}/status/${status}`,null);
   }
 }

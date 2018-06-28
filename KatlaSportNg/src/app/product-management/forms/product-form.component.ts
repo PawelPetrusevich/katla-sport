@@ -4,6 +4,8 @@ import { Product } from '../models/product';
 import { ProductCategoryListItem } from '../models/product-category-list-item';
 import { ProductCategoryService } from '../services/product-category.service';
 import { ProductService } from '../services/product.service';
+import { NotificationsService } from 'angular2-notifications';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-product-form',
@@ -21,7 +23,8 @@ export class ProductFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
-    private productCategoryService: ProductCategoryService
+    private productCategoryService: ProductCategoryService,
+    private notificationService: NotificationsService,
   ) { }
 
   ngOnInit() {
@@ -51,17 +54,30 @@ export class ProductFormComponent implements OnInit {
       this.productService.updateProduct(this.product).subscribe(p => this.navigateTo());
     } else {
       this.product.сategoryId = this.categoryId;
-      this.productService.addProduct(this.product).subscribe(p => this.navigateTo());
+      this.productService.addProduct(this.product).subscribe(p => {this.navigateTo()},error => this.errorNotification(error as HttpErrorResponse));
     }
   }
 
   onDelete() {
+    this.productService.setStatus(this.product.id,true).subscribe(p => this.product.isDeleted = true);
   }
 
   onUndelete() {
+    this.productService.setStatus(this.product.id,false).subscribe(p => this.product.isDeleted = false);
   }
 
   onPurge() {
     this.productService.deleteProduct(this.product.id).subscribe(p => this.navigateTo());
+  }
+
+  okNotification(){
+
+  }
+
+  errorNotification(error: HttpErrorResponse){
+    this.notificationService.error(
+      error.status,
+      error.error.Message
+    )
   }
 }

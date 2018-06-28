@@ -7,4 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  public options = {
+    position: ["bottom","right"],
+    timeOut : 1000,
+    lastOnBottom : true,
+    clickToClose : true,
+    animate : "scale"
+  }
 }
