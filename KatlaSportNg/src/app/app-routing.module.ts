@@ -20,6 +20,7 @@ const routes: Routes = [
   { path: 'category/:id/products', component: ProductCategoryProductListComponent },
   { path: 'products', component: ProductListComponent },
   { path: 'product/:id', component: ProductFormComponent },
+  {path: 'product', component: ProductFormComponent},
   { path: 'category/:categoryId/product/:id', component: ProductFormComponent },
   { path: 'hives', component: HiveListComponent },
   { path: 'hive', component: HiveFormComponent },

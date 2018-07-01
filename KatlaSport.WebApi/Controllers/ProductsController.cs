@@ -109,7 +109,7 @@ namespace KatlaSport.WebApi.Controllers
         /// </returns>
         [HttpPost]
         [Route("addProduct")]
-        [SwaggerResponse(HttpStatusCode.Created, Description = "Creates a new product.")]
+        [SwaggerResponse(HttpStatusCode.Created, Description = "Creates a new product.", Type = typeof(Product))]
         [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Model is invalid", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.Conflict, Description = "Product with this code exists", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]
