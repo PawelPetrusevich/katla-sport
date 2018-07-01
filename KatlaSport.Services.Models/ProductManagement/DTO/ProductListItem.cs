@@ -1,4 +1,4 @@
-﻿namespace KatlaSport.Services.ProductManagement
+﻿namespace KatlaSport.Services.ProductManagement.DTO
 {
     /// <summary>
     /// Represents a product.

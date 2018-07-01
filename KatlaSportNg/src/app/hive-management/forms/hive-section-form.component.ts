@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HiveSection } from '../models/hive-section';
 import { UpdateRequestHiveSection } from '../models/update-request-hive-section';
 import { HiveSectionService } from '../services/hive-section.service';
+import { NotificationProviderService } from '../../shared/services/notification-provider.service';
 
 @Component({
   selector: 'app-hive-section-form',
@@ -19,7 +20,8 @@ export class HiveSectionFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: HiveSectionService
+    private service: HiveSectionService,
+    private notificationService: NotificationProviderService
   ) { }
 
   navigateToHiveSection(){
@@ -36,25 +38,56 @@ export class HiveSectionFormComponent implements OnInit {
   }
 
   onDelete(){
-    this.service.setHiveSectionStatus(this.hiveSection.id,true).subscribe(x=> this.hiveSection.isDeleted = true);
+    this.service.setHiveSectionStatus(this.hiveSection.id,true).subscribe(x=>{
+       this.hiveSection.isDeleted = true
+      },
+      error => this.notificationService.errorNatification(error)
+    );
   }
 
   onUnDelete(){
-    this.service.setHiveSectionStatus(this.hiveSection.id,false).subscribe(x=> this.hiveSection.isDeleted = false);
+    this.service.setHiveSectionStatus(this.hiveSection.id,false).subscribe(x=>{
+      this.hiveSection.isDeleted = false
+    },
+    error => this.notificationService.errorNatification(error)
+  );
   }
 
   onPurge(){
-    this.service.deleteHiveSection(this.hiveSection.id).subscribe(x=>this.navigateToHiveSection());
+    this.service.deleteHiveSection(this.hiveSection.id).subscribe(x=>{
+      this.navigateToHiveSection()
+    },
+    error => this.notificationService.errorNatification(error)
+  );
   }
 
   onSubmit() {
     if(this.hiveSection.id == 0){
-      this.service.createHiveSection(this.hiveSection,this.hiveId).subscribe(x=>this.navigateToHiveSection());
+      this.UpdateHiveSection();
     }
     else{
+      this.CreateHiveSection();
+    }
+  }
+
+  private UpdateHiveSection() {
       this.updateHiveSectionRequest.code = this.hiveSection.code;
       this.updateHiveSectionRequest.name = this.hiveSection.name;
-      this.service.updateHiveSection(this.updateHiveSectionRequest,this.hiveSection.id).subscribe(x=>this.navigateToHiveSection());
-    }
+
+      this.service.updateHiveSection(this.updateHiveSectionRequest,this.hiveSection.id).subscribe(x=>{
+        this.navigateToHiveSection();
+        this.notificationService.okNatification(`${x.name} update.`)
+      },
+      error => this.notificationService.errorNatification(error)
+    );
+  }
+
+  private CreateHiveSection() {
+    this.service.createHiveSection(this.hiveSection,this.hiveId).subscribe(x=>{
+      this.navigateToHiveSection();
+      this.notificationService.okNatification(`${x.name} created.`)
+    },
+    error => this.notificationService.errorNatification(error)
+  );
   }
 }

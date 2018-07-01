@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace KatlaSport.Services.ProductManagement
+﻿namespace KatlaSport.Services.ProductManagement.DTO
 {
+    using System;
+
     /// <summary>
     /// Represents a product category.
     /// </summary>

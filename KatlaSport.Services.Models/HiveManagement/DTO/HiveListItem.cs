@@ -1,11 +1,9 @@
-﻿using System;
-
-namespace KatlaSport.Services.HiveManagement
+﻿namespace KatlaSport.Services.HiveManagement.DTO
 {
     /// <summary>
     /// Represents a hive.
     /// </summary>
-    public class Hive
+    public class HiveListItem
     {
         /// <summary>
         /// Gets or sets a hive identifier.
@@ -28,13 +26,8 @@ namespace KatlaSport.Services.HiveManagement
         public bool IsDeleted { get; set; }
 
         /// <summary>
-        /// Gets or sets a store hive address.
+        /// Gets or sets a hive section count.
         /// </summary>
-        public string Address { get; set; }
-
-        /// <summary>
-        /// Gets or sets a timestamp when the hive was updated last time.
-        /// </summary>
-        public DateTime LastUpdated { get; set; }
+        public int HiveSectionCount { get; set; }
     }
 }

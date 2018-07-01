@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace KatlaSport.Services.ProductManagement
+﻿namespace KatlaSport.Services.ProductManagement.Interfaces
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using KatlaSport.Services.ProductManagement.DTO;
+
     /// <summary>
     /// Represents a product category service.
     /// </summary>

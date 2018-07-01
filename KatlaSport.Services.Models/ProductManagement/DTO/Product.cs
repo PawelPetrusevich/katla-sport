@@ -1,25 +1,12 @@
-﻿using FluentValidation.Attributes;
-
-namespace KatlaSport.Services.ProductManagement
+﻿namespace KatlaSport.Services.ProductManagement.DTO
 {
     /// <summary>
-    /// Represents a request for creating and updating a product.
+    /// Represents a product.
     /// </summary>
-    [Validator(typeof(UpdateProductRequestValidator))]
-    public class UpdateProductRequest
+    public class Product : ProductCategoryProductListItem
     {
         /// <summary>
-        /// Gets or sets a product name.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets a product code.
-        /// </summary>
-        public string Code { get; set; }
-
-        /// <summary>
-        /// Gets or sets a product category identifier.
+        /// Gets or sets a parent product category identifier.
         /// </summary>
         public int CategoryId { get; set; }
 

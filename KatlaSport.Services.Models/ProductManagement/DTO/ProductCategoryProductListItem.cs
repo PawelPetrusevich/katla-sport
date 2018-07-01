@@ -1,34 +1,29 @@
-﻿using System;
-
-namespace KatlaSport.Services.ProductManagement
+﻿namespace KatlaSport.Services.ProductManagement.DTO
 {
+    using System;
+
     /// <summary>
-    /// Represents a product category.
+    /// Represents a product.
     /// </summary>
-    public class ProductCategory
+    public class ProductCategoryProductListItem
     {
         /// <summary>
-        /// Gets or sets a product category identifier.
+        /// Gets or sets a product identifier.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or sets a product category name.
+        /// Gets or sets a product name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a product category code.
+        /// Gets or sets a product code.
         /// </summary>
         public string Code { get; set; }
 
         /// <summary>
-        /// Gets or sets a product category description.
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether a product category is deleted.
+        /// Gets or sets a value indicating whether a product is deleted.
         /// </summary>
         public bool IsDeleted { get; set; }
 

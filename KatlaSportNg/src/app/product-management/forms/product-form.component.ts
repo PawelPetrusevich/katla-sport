@@ -5,7 +5,8 @@ import { ProductCategoryListItem } from '../models/product-category-list-item';
 import { ProductCategoryService } from '../services/product-category.service';
 import { ProductService } from '../services/product.service';
 import { NotificationsService } from 'angular2-notifications';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponseBase, HttpResponse } from '@angular/common/http';
+import { NotificationProviderService } from '../../shared/services/notification-provider.service';
 
 @Component({
   selector: 'app-product-form',
@@ -24,7 +25,7 @@ export class ProductFormComponent implements OnInit {
     private router: Router,
     private productService: ProductService,
     private productCategoryService: ProductCategoryService,
-    private notificationService: NotificationsService,
+    private notificationProviderService: NotificationProviderService,
   ) { }
 
   ngOnInit() {
@@ -51,33 +52,53 @@ export class ProductFormComponent implements OnInit {
 
   onSubmit() {
     if (this.existed) {
-      this.productService.updateProduct(this.product).subscribe(p => this.navigateTo());
+      this.UpdateProduct();
     } else {
-      this.product.сategoryId = this.categoryId;
-      this.productService.addProduct(this.product).subscribe(p => {this.navigateTo()},error => this.errorNotification(error as HttpErrorResponse));
+      this.CreateProduct();
     }
   }
 
   onDelete() {
-    this.productService.setStatus(this.product.id,true).subscribe(p => this.product.isDeleted = true);
+    this.productService.setStatus(this.product.id,true).subscribe(p => {
+      this.product.isDeleted = true
+    },
+    error => this.notificationProviderService.errorNatification(error)
+  );
   }
 
   onUndelete() {
-    this.productService.setStatus(this.product.id,false).subscribe(p => this.product.isDeleted = false);
+    this.productService.setStatus(this.product.id,false).subscribe(p => {
+      this.product.isDeleted = false
+    },
+    error => this.notificationProviderService.errorNatification(error)
+  );
   }
 
   onPurge() {
-    this.productService.deleteProduct(this.product.id).subscribe(p => this.navigateTo());
+    this.productService.deleteProduct(this.product.id).subscribe(p => {
+      this.navigateTo()
+    },
+    error => this.notificationProviderService.errorNatification(error)
+  );
   }
 
-  okNotification(){
-
+  private CreateProduct() {
+    this.product.сategoryId = this.categoryId;
+      this.productService.addProduct(this.product).subscribe(p => {
+        this.navigateTo();
+        this.notificationProviderService.okNatification(`${p.name} created.`)
+      },
+      error => this.notificationProviderService.errorNatification(error)
+    );
   }
 
-  errorNotification(error: HttpErrorResponse){
-    this.notificationService.error(
-      error.status,
-      error.error.Message
-    )
+  private UpdateProduct() {
+    this.productService.updateProduct(this.product).subscribe(
+      p => {
+        this.navigateTo();
+        this.notificationProviderService.okNatification(`${p.name} update.`)
+      },
+      error => this.notificationProviderService.errorNatification(error)
+    );
   }
 }

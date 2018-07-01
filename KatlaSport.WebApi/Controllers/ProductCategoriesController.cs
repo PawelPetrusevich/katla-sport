@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using KatlaSport.Services.ProductManagement;
 using KatlaSport.WebApi.CustomFilters;
 using Microsoft.Web.Http;
 using Swashbuckle.Swagger.Annotations;
@@ -12,6 +11,8 @@ using Swashbuckle.Swagger.Annotations;
 namespace KatlaSport.WebApi.Controllers
 {
     using KatlaSport.Services;
+    using KatlaSport.Services.ProductManagement.DTO;
+    using KatlaSport.Services.ProductManagement.Interfaces;
 
     [ApiVersion("1.0")]
     [RoutePrefix("api/categories")]

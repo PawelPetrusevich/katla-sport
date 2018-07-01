@@ -60,27 +60,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HiveManagement\Hive.cs" />
-    <Compile Include="HiveManagement\HiveListItem.cs" />
-    <Compile Include="HiveManagement\HiveSection.cs" />
-    <Compile Include="HiveManagement\HiveSectionListItem.cs" />
-    <Compile Include="HiveManagement\IHiveSectionService.cs" />
-    <Compile Include="HiveManagement\IHiveService.cs" />
-    <Compile Include="HiveManagement\UpdateHiveRequest.cs" />
-    <Compile Include="HiveManagement\UpdateHiveRequestValidator.cs" />
-    <Compile Include="HiveManagement\UpdateHiveSectionRequest.cs" />
-    <Compile Include="HiveManagement\UpdateHiveSectionRequestValidator.cs" />
-    <Compile Include="ProductManagement\IProductCatalogueService.cs" />
-    <Compile Include="ProductManagement\IProductCategoryService.cs" />
-    <Compile Include="ProductManagement\Product.cs" />
-    <Compile Include="ProductManagement\ProductCategory.cs" />
-    <Compile Include="ProductManagement\ProductCategoryListItem.cs" />
-    <Compile Include="ProductManagement\ProductCategoryProductListItem.cs" />
-    <Compile Include="ProductManagement\ProductListItem.cs" />
-    <Compile Include="ProductManagement\UpdateProductCategoryRequest.cs" />
-    <Compile Include="ProductManagement\UpdateProductCategoryRequestValidator.cs" />
-    <Compile Include="ProductManagement\UpdateProductRequest.cs" />
-    <Compile Include="ProductManagement\UpdateProductRequestValidator.cs" />
+    <Compile Include="HiveManagement\DTO\Hive.cs" />
+    <Compile Include="HiveManagement\DTO\HiveListItem.cs" />
+    <Compile Include="HiveManagement\DTO\HiveSection.cs" />
+    <Compile Include="HiveManagement\DTO\HiveSectionListItem.cs" />
+    <Compile Include="HiveManagement\DTO\HiveUpdateResponseDto.cs" />
+    <Compile Include="HiveManagement\Interfaces\IHiveSectionService.cs" />
+    <Compile Include="HiveManagement\Interfaces\IHiveService.cs" />
+    <Compile Include="HiveManagement\DTO\UpdateHiveRequest.cs" />
+    <Compile Include="HiveManagement\Validator\UpdateHiveRequestValidator.cs" />
+    <Compile Include="HiveManagement\DTO\UpdateHiveSectionRequest.cs" />
+    <Compile Include="HiveManagement\Validator\UpdateHiveSectionRequestValidator.cs" />
+    <Compile Include="ProductManagement\DTO\ProductUpdateResponseDto.cs" />
+    <Compile Include="ProductManagement\Interfaces\IProductCatalogueService.cs" />
+    <Compile Include="ProductManagement\Interfaces\IProductCategoryService.cs" />
+    <Compile Include="ProductManagement\DTO\Product.cs" />
+    <Compile Include="ProductManagement\DTO\ProductCategory.cs" />
+    <Compile Include="ProductManagement\DTO\ProductCategoryListItem.cs" />
+    <Compile Include="ProductManagement\DTO\ProductCategoryProductListItem.cs" />
+    <Compile Include="ProductManagement\DTO\ProductListItem.cs" />
+    <Compile Include="ProductManagement\DTO\UpdateProductCategoryRequest.cs" />
+    <Compile Include="ProductManagement\Validator\UpdateProductCategoryRequestValidator.cs" />
+    <Compile Include="ProductManagement\DTO\UpdateProductRequest.cs" />
+    <Compile Include="ProductManagement\Validator\UpdateProductRequestValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

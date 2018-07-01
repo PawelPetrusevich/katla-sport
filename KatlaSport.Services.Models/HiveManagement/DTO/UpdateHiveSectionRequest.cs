@@ -1,4 +1,4 @@
-﻿namespace KatlaSport.Services.HiveManagement
+﻿namespace KatlaSport.Services.HiveManagement.DTO
 {
     /// <summary>
     /// Represent for request creating or updating hive section.

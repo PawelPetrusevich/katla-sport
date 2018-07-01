@@ -10,6 +10,8 @@ namespace KatlaSport.Services.HiveManagement
     using System.Threading.Tasks;
 
     using KatlaSport.DataAccess;
+    using KatlaSport.Services.HiveManagement.DTO;
+    using KatlaSport.Services.HiveManagement.Interfaces;
     using KatlaSport.Services.Properties;
 
     /// <summary>
@@ -82,7 +84,7 @@ namespace KatlaSport.Services.HiveManagement
         }
 
         /// <inheritdoc/>
-        public async Task<Hive> UpdateHiveAsync(int hiveId, UpdateHiveRequest updateRequest)
+        public async Task<HiveUpdateResponseDto> UpdateHiveAsync(int hiveId, UpdateHiveRequest updateRequest)
         {
             var dbHive = await _context.Hives.FirstOrDefaultAsync(p => p.Code == updateRequest.Code && p.Id != hiveId).ConfigureAwait(false);
             if (dbHive != null)
@@ -102,7 +104,7 @@ namespace KatlaSport.Services.HiveManagement
 
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
-            return Mapper.Map<Hive>(dbHive);
+            return Mapper.Map<HiveUpdateResponseDto>(dbHive);
         }
 
         /// <inheritdoc/>

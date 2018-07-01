@@ -1,22 +1,22 @@
-﻿namespace KatlaSport.Services.HiveManagement
+﻿namespace KatlaSport.Services.HiveManagement.DTO
 {
     /// <summary>
-    /// Represents a hive.
+    /// Represents a hive section.
     /// </summary>
-    public class HiveListItem
+    public class HiveSectionListItem
     {
         /// <summary>
-        /// Gets or sets a hive identifier.
+        /// Gets or sets a hive section identifier.
         /// </summary>
         public int Id { get; set; }
 
         /// <summary>
-        /// Gets or sets a hive name.
+        /// Gets or sets a hive section name.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a hive code.
+        /// Gets or sets a hive section code.
         /// </summary>
         public string Code { get; set; }
 
@@ -24,10 +24,5 @@
         /// Gets or sets a value indicating whether a hive is deleted.
         /// </summary>
         public bool IsDeleted { get; set; }
-
-        /// <summary>
-        /// Gets or sets a hive section count.
-        /// </summary>
-        public int HiveSectionCount { get; set; }
     }
 }

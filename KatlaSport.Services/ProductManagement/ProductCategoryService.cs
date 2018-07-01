@@ -9,6 +9,8 @@ using DbProductCategory = KatlaSport.DataAccess.ProductCatalogue.ProductCategory
 
 namespace KatlaSport.Services.ProductManagement
 {
+    using KatlaSport.Services.ProductManagement.DTO;
+    using KatlaSport.Services.ProductManagement.Interfaces;
     using KatlaSport.Services.Properties;
 
     /// <summary>

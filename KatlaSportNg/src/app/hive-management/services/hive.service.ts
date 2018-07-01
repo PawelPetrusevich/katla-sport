@@ -6,6 +6,7 @@ import { Hive } from '../models/hive';
 import { HiveListItem } from '../models/hive-list-item';
 import { HiveSectionListItem } from '../models/hive-section-list-item';
 import { UpdateRequestHive } from '../models/update-request-hive';
+import { HiveUpdateResponse } from '../models/hive-update-response';
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +32,8 @@ export class HiveService {
     return this.http.post<Hive>(`${this.url}addHive`,hive);
   }
 
-  updateHive(updateRequestHive: UpdateRequestHive,hiveId: number): Observable<Object> {
-    return this.http.put(`${this.url}/update/${hiveId}`,updateRequestHive);
+  updateHive(updateRequestHive: UpdateRequestHive,hiveId: number): Observable<HiveUpdateResponse> {
+    return this.http.put<HiveUpdateResponse>(`${this.url}/update/${hiveId}`,updateRequestHive);
   }
 
   deleteHive(hiveId: number): Observable<Object> {

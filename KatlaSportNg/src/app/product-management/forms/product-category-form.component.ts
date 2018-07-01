@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductCategory } from '../models/product-category';
 import { ProductCategoryService } from '../services/product-category.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { NotificationsService } from 'angular2-notifications';
+import { NotificationProviderService } from '../../shared/services/notification-provider.service';
 
 @Component({
   selector: 'app-product-category-form',
@@ -19,7 +18,7 @@ export class ProductCategoryFormComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private productCategoryService: ProductCategoryService,
-    private notificationService: NotificationsService
+    private notificationService: NotificationProviderService
   ) { }
 
   ngOnInit() {
@@ -40,35 +39,52 @@ export class ProductCategoryFormComponent implements OnInit {
 
   onSubmit() {
     if (this.existed) {
-      this.productCategoryService.updateProductCategory(this.productCategory).subscribe(c => this.navigateToCategories());
-    } else {
-      this.productCategoryService.addProductCategory(this.productCategory).subscribe(
-        c => {this.navigateToCategories()},
-        error => this.errorNotification(error)
-      );
+      this.UpdateProductCategory();
+    }
+    else {
+      this.CreateProductCategory();
     }
   }
 
   onDelete() {
-    this.productCategoryService.setProductCategoryStatus(this.productCategory.id, true).subscribe(c => this.productCategory.isDeleted = true);
+    this.productCategoryService.setProductCategoryStatus(this.productCategory.id, true).subscribe(c => {
+      this.productCategory.isDeleted = true
+    },
+    error => this.notificationService.errorNatification(error)
+  );
   }
 
   onUndelete() {
-    this.productCategoryService.setProductCategoryStatus(this.productCategory.id, false).subscribe(c => this.productCategory.isDeleted = false);
+    this.productCategoryService.setProductCategoryStatus(this.productCategory.id, false).subscribe(c => {
+      this.productCategory.isDeleted = false
+    },
+    error => this.notificationService.errorNatification(error)
+  );
   }
 
   onPurge() {
-    this.productCategoryService.deleteProductCategory(this.productCategory.id).subscribe(c => this.navigateToCategories());
+    this.productCategoryService.deleteProductCategory(this.productCategory.id).subscribe(c => {
+      this.navigateToCategories()
+    },
+    error => this.notificationService.errorNatification(error)
+  );
   }
 
-  okNotification(){
-
+  private UpdateProductCategory() {
+    this.productCategoryService.updateProductCategory(this.productCategory).subscribe(c => {
+      this.navigateToCategories();
+      this.notificationService.okNatification(`${c.name} update.`)
+    },
+    error => this.notificationService.errorNatification(error)
+  );
   }
 
-  errorNotification(error: HttpErrorResponse){
-    this.notificationService.error(
-      error.status,
-      error.error.message
-    )
+  private CreateProductCategory() {
+    this.productCategoryService.addProductCategory(this.productCategory).subscribe(c => {
+      this.navigateToCategories();
+      this.notificationService.okNatification(`${c.name} created.`)
+    },
+      error => this.notificationService.errorNatification(error)
+    );
   }
 }

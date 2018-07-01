@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace KatlaSport.Services.ProductManagement
+﻿namespace KatlaSport.Services.ProductManagement.Interfaces
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using KatlaSport.Services.ProductManagement.DTO;
+
     /// <summary>
     /// Represents a product catalogue service.
     /// </summary>
@@ -43,7 +45,7 @@ namespace KatlaSport.Services.ProductManagement
         /// <param name="productId">A product identifier.</param>
         /// <param name="updateRequest">A <see cref="UpdateProductRequest"/>.</param>
         /// <returns>A <see cref="Task{Product}"/>.</returns>
-        Task<Product> UpdateProductAsync(int productId, UpdateProductRequest updateRequest);
+        Task<ProductUpdateResponseDto> UpdateProductAsync(int productId, UpdateProductRequest updateRequest);
 
         /// <summary>
         /// Deletes an existed product.

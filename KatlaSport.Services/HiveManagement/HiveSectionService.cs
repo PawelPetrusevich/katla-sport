@@ -9,6 +9,8 @@ using DbHiveSection = KatlaSport.DataAccess.ProductStoreHive.StoreHiveSection;
 
 namespace KatlaSport.Services.HiveManagement
 {
+    using KatlaSport.Services.HiveManagement.DTO;
+    using KatlaSport.Services.HiveManagement.Interfaces;
     using KatlaSport.Services.Properties;
 
     /// <summary>

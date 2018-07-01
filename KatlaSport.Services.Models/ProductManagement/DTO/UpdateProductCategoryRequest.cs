@@ -1,7 +1,9 @@
-﻿using FluentValidation.Attributes;
-
-namespace KatlaSport.Services.ProductManagement
+﻿namespace KatlaSport.Services.ProductManagement.DTO
 {
+    using FluentValidation.Attributes;
+
+    using KatlaSport.Services.ProductManagement.Validator;
+
     /// <summary>
     /// Represents a request for creating and updating a product category.
     /// </summary>

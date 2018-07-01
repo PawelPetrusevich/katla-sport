@@ -12,6 +12,7 @@ namespace KatlaSport.Services.Tests.ProductManagement
 
     using KatlaSport.DataAccess.ProductCatalogue;
     using KatlaSport.Services.ProductManagement;
+    using KatlaSport.Services.ProductManagement.DTO;
 
     using Moq;
 

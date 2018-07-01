@@ -4,6 +4,7 @@ import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
 import { ProductCategory } from '../models/product-category';
 import { ProductCategoryListItem } from '../models/product-category-list-item';
+import { ProductCategoryUpdateResponse } from '../models/product-category-update-response';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,8 @@ export class ProductCategoryService {
     return this.http.post<ProductCategory>(`${this.url}addProductCategory`, productCategory);
   }
 
-  updateProductCategory(productCategory: ProductCategory): Observable<ProductCategory> {
-    return this.http.put<ProductCategory>(`${this.url}update/${productCategory.id}`, productCategory);
+  updateProductCategory(productCategory: ProductCategory): Observable<ProductCategoryUpdateResponse> {
+    return this.http.put<ProductCategoryUpdateResponse>(`${this.url}update/${productCategory.id}`, productCategory);
   }
 
   deleteProductCategory(productCategoryId: number): Observable<Object> {

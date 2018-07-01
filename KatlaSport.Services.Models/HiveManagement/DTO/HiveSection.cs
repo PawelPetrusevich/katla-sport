@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace KatlaSport.Services.HiveManagement
+﻿namespace KatlaSport.Services.HiveManagement.DTO
 {
+    using System;
+
     /// <summary>
     /// Represents a hive section.
     /// </summary>

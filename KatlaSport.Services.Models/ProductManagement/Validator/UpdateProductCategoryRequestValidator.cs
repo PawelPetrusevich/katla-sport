@@ -1,7 +1,9 @@
-﻿using FluentValidation;
-
-namespace KatlaSport.Services.ProductManagement
+﻿namespace KatlaSport.Services.ProductManagement.Validator
 {
+    using FluentValidation;
+
+    using KatlaSport.Services.ProductManagement.DTO;
+
     /// <summary>
     /// Represents a validator for <see cref="UpdateProductCategoryRequest"/>.
     /// </summary>

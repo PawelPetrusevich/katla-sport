@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using KatlaSport.Services.ProductManagement;
 using KatlaSport.WebApi.CustomFilters;
 using Microsoft.Web.Http;
 using Swashbuckle.Swagger.Annotations;
@@ -12,6 +11,8 @@ using Swashbuckle.Swagger.Annotations;
 namespace KatlaSport.WebApi.Controllers
 {
     using KatlaSport.Services;
+    using KatlaSport.Services.ProductManagement.DTO;
+    using KatlaSport.Services.ProductManagement.Interfaces;
 
     [ApiVersion("1.0")]
     [RoutePrefix("api/products")]
@@ -149,7 +150,7 @@ namespace KatlaSport.WebApi.Controllers
         /// </returns>
         [HttpPut]
         [Route("update/{id:int:min(1)}")]
-        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Updates an existed product.", Type = typeof(Product))]
+        [SwaggerResponse(HttpStatusCode.NoContent, Description = "Updates an existed product.", Type = typeof(ProductUpdateResponseDto))]
         [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Product with this ID not found or model is invalid", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.Conflict, Description = "Product with this code exists", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.InternalServerError, Description = "Server error", Type = typeof(string))]

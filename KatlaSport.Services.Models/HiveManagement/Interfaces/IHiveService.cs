@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-
-namespace KatlaSport.Services.HiveManagement
+﻿namespace KatlaSport.Services.HiveManagement.Interfaces
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
+
+    using KatlaSport.Services.HiveManagement.DTO;
 
     /// <summary>
     /// Represents a hive service.
@@ -35,7 +36,7 @@ namespace KatlaSport.Services.HiveManagement
         /// <param name="hiveId">A hive identifier.</param>
         /// <param name="updateRequest">A <see cref="UpdateHiveRequest"/>.</param>
         /// <returns>A <see cref="Task{Hive}"/>.</returns>
-        Task<Hive> UpdateHiveAsync(int hiveId, UpdateHiveRequest updateRequest);
+        Task<HiveUpdateResponseDto> UpdateHiveAsync(int hiveId, UpdateHiveRequest updateRequest);
 
         /// <summary>
         /// Deletes an existed hive.

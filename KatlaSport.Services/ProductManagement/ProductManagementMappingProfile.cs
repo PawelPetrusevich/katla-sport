@@ -5,6 +5,8 @@ using DataAccessProductCategory = KatlaSport.DataAccess.ProductCatalogue.Product
 
 namespace KatlaSport.Services.ProductManagement
 {
+    using KatlaSport.Services.ProductManagement.DTO;
+
     public sealed class ProductManagementMappingProfile : Profile
     {
         public ProductManagementMappingProfile()
@@ -12,6 +14,7 @@ namespace KatlaSport.Services.ProductManagement
             CreateMap<DataAccessProductCategory, ProductCategory>();
             CreateMap<DataAccessProductCategory, ProductCategoryListItem>();
             CreateMap<DataAccessProduct, ProductCategoryProductListItem>();
+            CreateMap<DataAccessProduct, ProductUpdateResponseDto>();
 
             CreateMap<DataAccessProduct, Product>()
                 .ForMember(li => li.Description, opt => opt.MapFrom(p => p.Description == null ? string.Empty : p.Description))

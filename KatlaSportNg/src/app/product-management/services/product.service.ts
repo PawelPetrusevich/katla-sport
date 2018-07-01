@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Product } from '../models/product';
 import { ProductCategoryProductListItem } from '../models/product-category-product-list-item';
 import { ProductListItem } from '../models/product-list-item';
+import { ProductUpdateResponseDTO } from '../models/product-update-response-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +32,8 @@ export class ProductService {
     return this.http.post<Product>(`${this.url}addProduct`, product);
   }
 
-  updateProduct(product: Product): Observable<Object> {
-    return this.http.put<Object>(`${this.url}update/${product.id}`, product);
+  updateProduct(product: Product): Observable<ProductUpdateResponseDTO> {
+    return this.http.put<ProductUpdateResponseDTO>(`${this.url}update/${product.id}`, product);
   }
 
   deleteProduct(productId: number): Observable<Object> {

@@ -8,7 +8,8 @@
     using System.Web.Http.Cors;
 
     using KatlaSport.Services;
-    using KatlaSport.Services.HiveManagement;
+    using KatlaSport.Services.HiveManagement.DTO;
+    using KatlaSport.Services.HiveManagement.Interfaces;
     using KatlaSport.WebApi.CustomFilters;
     using KatlaSport.WebApi.Properties;
 
@@ -208,7 +209,7 @@
         /// </returns>
         [HttpPut]
         [Route("update/{id:int:min(1)}")]
-        [SwaggerResponse(HttpStatusCode.OK, Description = "Updates an existed hive.",Type = typeof(Hive))]
+        [SwaggerResponse(HttpStatusCode.OK, Description = "Updates an existed hive.", Type = typeof(HiveUpdateResponseDto))]
         [SwaggerResponse(HttpStatusCode.BadRequest, Description = "Hive model value is invalid or null", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.Conflict, Description = "Hive exists with this code", Type = typeof(string))]
         [SwaggerResponse(HttpStatusCode.NotFound, Description = "Hive exists with this ID", Type = typeof(string))]

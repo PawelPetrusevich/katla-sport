@@ -12,6 +12,7 @@
 
     using KatlaSport.DataAccess.ProductStoreHive;
     using KatlaSport.Services.HiveManagement;
+    using KatlaSport.Services.HiveManagement.DTO;
 
     using Moq;
 

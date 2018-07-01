@@ -10,6 +10,8 @@
 
     using KatlaSport.DataAccess.ProductCatalogue;
     using KatlaSport.Services.ProductManagement;
+    using KatlaSport.Services.ProductManagement.DTO;
+
     using Moq;
     using Xunit;
     using DbProductCategory = KatlaSport.DataAccess.ProductCatalogue.ProductCategory;

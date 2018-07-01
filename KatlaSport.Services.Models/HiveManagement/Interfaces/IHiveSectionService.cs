@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace KatlaSport.Services.HiveManagement
+﻿namespace KatlaSport.Services.HiveManagement.Interfaces
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+
+    using KatlaSport.Services.HiveManagement.DTO;
+
     /// <summary>
     /// Represents a hive section service.
     /// </summary>

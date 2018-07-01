@@ -9,6 +9,8 @@ using DbProduct = KatlaSport.DataAccess.ProductCatalogue.CatalogueProduct;
 
 namespace KatlaSport.Services.ProductManagement
 {
+    using KatlaSport.Services.ProductManagement.DTO;
+    using KatlaSport.Services.ProductManagement.Interfaces;
     using KatlaSport.Services.Properties;
 
     /// <summary>
@@ -88,7 +90,7 @@ namespace KatlaSport.Services.ProductManagement
         }
 
         /// <inheritdoc/>
-        public async Task<Product> UpdateProductAsync(int productId, UpdateProductRequest updateRequest)
+        public async Task<ProductUpdateResponseDto> UpdateProductAsync(int productId, UpdateProductRequest updateRequest)
         {
             var dbProduct = await _context.Products.FirstOrDefaultAsync(p => p.Code == updateRequest.Code && p.Id != productId).ConfigureAwait(false);
             if (dbProduct != null)
@@ -107,7 +109,7 @@ namespace KatlaSport.Services.ProductManagement
 
             await _context.SaveChangesAsync().ConfigureAwait(false);
 
-            return Mapper.Map<Product>(dbProduct);
+            return Mapper.Map<ProductUpdateResponseDto>(dbProduct);
         }
 
         /// <inheritdoc/>
