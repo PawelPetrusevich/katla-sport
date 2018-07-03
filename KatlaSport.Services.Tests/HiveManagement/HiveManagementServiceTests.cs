@@ -103,12 +103,12 @@
             var collection = fixture.CreateMany<StoreHive>(5).ToArray();
             context.Setup(x => x.Hives).ReturnsEntitySet(collection);
             context.Setup(x => x.Sections).ReturnsEntitySet(new List<StoreHiveSection>());
-            var address = "New Address";
-            var updateHive = new UpdateHiveRequest { Address = address };
+            var name = "New Name";
+            var updateHive = new UpdateHiveRequest { Name = name };
             var result = await service.UpdateHiveAsync(collection[0].Id, updateHive);
 
-            result.Id.Should().Be(collection[0].Id);
-            result.Address.Should().Be(address);
+            result.Code.Should().Be(collection[0].Code);
+            result.Name.Should().Be(name);
         }
 
         [Theory]
