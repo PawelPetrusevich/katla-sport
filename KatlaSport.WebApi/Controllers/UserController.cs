@@ -1,6 +1,8 @@
 ﻿namespace KatlaSport.WebApi.Controllers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Security.Claims;
     using System.Threading.Tasks;
     using System.Web.Http;
     using System.Web.Http.Cors;
@@ -38,8 +40,8 @@
 
             try
             {
-                await this._userService.CreateUserAsync(userRegistrationDto);
-                return this.Ok();
+                var result = await this._userService.CreateUserAsync(userRegistrationDto);
+                return this.Ok(result);
             }
             catch (Exception)
             {
@@ -47,5 +49,31 @@
             }
         }
 
+        [HttpGet]
+        [Route("GetUserClaims")]
+        public AccountModel GetUserClaims()
+        {
+            var identityClaims = (ClaimsIdentity)User.Identity;
+            IEnumerable<Claim> claims = identityClaims.Claims;
+            AccountModel model = new AccountModel()
+                                     {
+                                         UserName = identityClaims.FindFirst("Username").Value,
+                                         Email = identityClaims.FindFirst("Email").Value,
+                                         LoggedOn = identityClaims.FindFirst("LoggedOn").Value
+                                     };
+            return model;
+        }
+
+    }
+
+    public class AccountModel
+    {
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        public string LoggedOn { get; set; }
     }
 }

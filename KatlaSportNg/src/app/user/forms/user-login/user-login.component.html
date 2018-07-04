@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 well">
+      <h3 class="text-center">LogIn</h3>
+      <form class="form" (ngSubmit)="onSubmit()" name="loginForm" #loginForm="ngForm">
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label for="labelLogin">Login</label>
+          <input type="text" class="form-control" placeholder="Enter login" id="login"
+          aria-describedby="labelLogin" [(ngModel)]="user.login" name="login" #login="ngModel"
+          required/>
+          <div *ngIf="login.invalid && (login.dirty || login.touched)" class="alert alert-danger">
+              <div *ngIf="login.errors.required">Login is required.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label for="labelPassword">Password</label>
+          <input type="password" class="form-control" id="password" aria-describedby="labelPassword" [(ngModel)]="user.password"
+          name="password" #password="ngModel" required/>
+        </div>
+        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+            <div *ngIf="password.errors.required">Password is required.</div>
+        </div>
+      </div>
+      <div class="text-center col-xs-12">
+        <input type="button" class="btn btn-default" [disabled]="loginForm.invalid" value="Sig In" (click)="onSubmit()" />
+      </div>
+    </form>
+  </div>
+</div>

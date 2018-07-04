@@ -12,6 +12,8 @@
     using KatlaSport.Services.UserManagement.DTO;
     using KatlaSport.Services.UserManagement.Interfaces;
 
+    using Microsoft.AspNet.Identity;
+
     public class UserService : IUserService
     {
         private IUserRepository _repository;
@@ -21,7 +23,7 @@
             _repository = repository;
         }
 
-        public async Task CreateUserAsync(UserRegistrationDto userRegistrationDto)
+        public async Task<IdentityResult> CreateUserAsync(UserRegistrationDto userRegistrationDto)
         {
             var user = await _repository.UserManager.FindByEmailAsync(userRegistrationDto.Email).ConfigureAwait(false);
 
@@ -36,6 +38,8 @@
             {
                 throw new ArgumentException("User not created");
             }
+
+            return result;
         }
 
         public async Task<ClaimsIdentity> Authenticate(UserLoginDto user)

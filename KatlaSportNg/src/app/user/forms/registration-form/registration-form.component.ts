@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../models/user.model';
 import { NgForm } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { NotificationProviderService } from '../../../shared/services/notification-provider.service';
 
 @Component({
   selector: 'app-registration-form',
@@ -16,6 +17,7 @@ export class RegistrationFormComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private notificationServise: NotificationProviderService
   ) { }
 
   ngOnInit() {
@@ -30,7 +32,11 @@ export class RegistrationFormComponent implements OnInit {
   }
 
   onSubmit(){
-    this.userService.registerUser(this.user).subscribe(x=> this.resetForm());
+    this.userService.registerUser(this.user).subscribe(x=> {
+      this.notificationServise.okNatification("User was created.")
+    },
+    error=> this.notificationServise.errorNatification(error)
+  );
   }
 
 }

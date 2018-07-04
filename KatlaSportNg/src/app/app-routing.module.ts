@@ -11,6 +11,7 @@ import { ProductCategoryListComponent } from './product-management/lists/product
 import { ProductCategoryProductListComponent } from './product-management/lists/product-category-product-list.component';
 import { ProductListComponent } from './product-management/lists/product-list.component';
 import { RegistrationFormComponent } from './user/forms/registration-form/registration-form.component';
+import { UserLoginComponent } from './user/forms/user-login/user-login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/main', pathMatch: 'full' },
@@ -21,7 +22,7 @@ const routes: Routes = [
   { path: 'category/:id/products', component: ProductCategoryProductListComponent },
   { path: 'products', component: ProductListComponent },
   { path: 'product/:id', component: ProductFormComponent },
-  {path: 'product', component: ProductFormComponent},
+  { path: 'product', component: ProductFormComponent},
   { path: 'category/:categoryId/product/:id', component: ProductFormComponent },
   { path: 'hives', component: HiveListComponent },
   { path: 'hive', component: HiveFormComponent },
@@ -29,7 +30,8 @@ const routes: Routes = [
   { path: 'hive/:id/sections', component: HiveSectionListComponent },
   { path: 'hive/:hiveId/section/:id', component: HiveSectionFormComponent },
   { path: 'hive/:hiveId/section', component: HiveSectionFormComponent },
-  { path: 'user/registration', component: RegistrationFormComponent}
+  { path: 'user/registration', component: RegistrationFormComponent},
+  { path: 'user/login', component: UserLoginComponent}
 ];
 
 @NgModule({

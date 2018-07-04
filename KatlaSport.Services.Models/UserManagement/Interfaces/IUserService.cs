@@ -4,10 +4,11 @@
     using System.Threading.Tasks;
 
     using KatlaSport.Services.UserManagement.DTO;
+    using Microsoft.AspNet.Identity;
 
     public interface IUserService
     {
-        Task CreateUserAsync(UserRegistrationDto user);
+        Task<IdentityResult> CreateUserAsync(UserRegistrationDto user);
 
         Task<ClaimsIdentity> Authenticate(UserLoginDto user);
 

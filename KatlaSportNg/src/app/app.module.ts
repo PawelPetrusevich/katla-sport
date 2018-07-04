@@ -23,6 +23,7 @@ import { SimpleNotificationsModule } from 'angular2-notifications';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RegistrationFormComponent } from './user/forms/registration-form/registration-form.component';
 import { UserService } from './user/services/user.service';
+import { UserLoginComponent } from './user/forms/user-login/user-login.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { UserService } from './user/services/user.service';
     HiveSectionFormComponent,
     HiveSectionListComponent,
     RegistrationFormComponent,
+    UserLoginComponent,
   ],
   imports: [
     // Angular imports
