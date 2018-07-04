@@ -1,0 +1,46 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 col-md-offset-3 well">
+      <h3 class="text-center">Registration</h3>
+      <form class="form" (ngSubmit)="onSubmit()" name="registrationForm" #registrationForm="ngForm">
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label for="labelLogin">Login</label>
+          <input type="text" class="form-control" placeholder="Enter login" id="login"
+          aria-describedby="labelLogin" [(ngModel)]="user.login" name="login" #login="ngModel"
+          minlength="4" maxlength="15" required/>
+          <div *ngIf="login.invalid && (login.dirty || login.touched)" class="alert alert-danger">
+              <div *ngIf="login.errors.required">Login is required.</div>
+              <div *ngIf="login.errors.minlength">Login must be at least 4 characters long.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label for="labelEmail">E-mail</label>
+          <input type="email" class="form-control" placeholder="Enter E-mail"
+          id="email" aria-describedby="labelEmail" [(ngModel)]="user.email" name="email" #email="ngModel"
+          required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"/>
+          <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+              <div *ngIf="email.errors.required">E-mail is required.</div>
+              <div *ngIf="email.errors">E-mail is invalid.</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="form-group">
+          <label for="labelPassword">Password</label>
+          <input type="password" class="form-control" id="password" aria-describedby="labelPassword" [(ngModel)]="user.password"
+          name="password" #password="ngModel" minlength="4" required/>
+        </div>
+        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+            <div *ngIf="password.errors.required">Password is required.</div>
+            <div *ngIf="password.errors.minlength">Password is invalid.</div>
+        </div>
+      </div>
+      <div class="text-center col-xs-12">
+        <input type="button" class="btn btn-default" [disabled]="registrationForm.invalid" value="Registration" (click)="onSubmit()" />
+      </div>
+    </form>
+  </div>
+</div>

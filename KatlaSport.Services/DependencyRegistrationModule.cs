@@ -4,6 +4,8 @@ namespace KatlaSport.Services
 {
     using KatlaSport.Services.HiveManagement.Interfaces;
     using KatlaSport.Services.ProductManagement.Interfaces;
+    using KatlaSport.Services.UserManagement.Interfaces;
+    using KatlaSport.Services.UserManagment;
 
     /// <summary>
     /// Represents an assembly dependency registration <see cref="Module"/>.
@@ -21,6 +23,7 @@ namespace KatlaSport.Services
             builder.RegisterType<HiveManagement.HiveService>().As<IHiveService>();
             builder.RegisterType<HiveManagement.HiveSectionService>().As<IHiveSectionService>();
             builder.RegisterType<UserContext>().As<IUserContext>();
+            builder.RegisterType<UserService>().As<IUserService>();
         }
     }
 }

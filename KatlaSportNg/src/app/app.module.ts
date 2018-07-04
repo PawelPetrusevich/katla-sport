@@ -21,6 +21,8 @@ import { ProductCategoryService } from 'app/product-management/services/product-
 import { ProductService } from 'app/product-management/services/product.service';
 import { SimpleNotificationsModule } from 'angular2-notifications';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RegistrationFormComponent } from './user/forms/registration-form/registration-form.component';
+import { UserService } from './user/services/user.service';
 
 
 @NgModule({
@@ -36,6 +38,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HiveFormComponent,
     HiveSectionFormComponent,
     HiveSectionListComponent,
+    RegistrationFormComponent,
   ],
   imports: [
     // Angular imports
@@ -56,6 +59,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ProductCategoryService,
     HiveService,
     HiveSectionService,
+    UserService,
   ],
   bootstrap: [AppComponent]
 })
