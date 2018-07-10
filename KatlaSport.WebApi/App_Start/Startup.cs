@@ -6,15 +6,13 @@ using Owin;
 namespace KatlaSport.WebApi.App_Start
 {
     using System;
-
-    using Microsoft.Owin.Cors;
     using Microsoft.Owin.Security.OAuth;
 
     public class Startup
     {
         public void Configuration(IAppBuilder app)
         {
-            app.UseCors(CorsOptions.AllowAll);
+            //app.UseCors(CorsOptions.AllowAll);
 
             OAuthAuthorizationServerOptions option = new OAuthAuthorizationServerOptions
                                                          {
